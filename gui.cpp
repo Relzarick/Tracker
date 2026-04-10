@@ -1,36 +1,54 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "logic.h"
 #include <print>
+#include <chrono>
 
-using std::cout, std::cin, std::vector, std::string;
+#include "methods.h"
+#include "data.h"
+#include <conio.h>
+
+using std::cout, std::cin, std::vector, std::string, std::print;
+
+using namespace std::chrono;
 
 int main()
 {
   start();
-  // prompt();
+}
+
+void testPrint()
+{
+  product test;
+  test.name = "apple";
+  test.description = "testing";
+  test.price = 22.0;
+  test.qty = 22;
+
+  test.adv = advanceInfo{
+      year_month_day{year{2020}, month{9}, day{29}},
+      year_month_day{year{2022}, month{3}, day{19}}};
+
+  printP(test);
 }
 
 void start()
 {
-
-  // product test1;
-  std::print("sadf");
-  cout << "test\n";
-
-  cout << __cplusplus << std::endl;
+  print("Tracker APP\n");
+  testPrint();
 }
 
-template <typename T>
-void prompt(T input)
+void printP(const product &p)
 {
-  cout << "Enter input: ";
+  print("[{}] {} | qty: {} | ${:.2f}", p.name, *p.description, p.qty, p.price);
 
-  string input1;
-  cin >> input1;
+  if (p.adv)
+  {
+    if (p.adv->purchase)
+      std::print(" | purchased: {}", *p.adv->purchase);
+    if (p.adv->expiry)
+      std::print(" | expires: {}", *p.adv->expiry);
+  }
 
-  cout << input1;
-
-  vector<string> test;
+  print("\n");
 }
