@@ -2,4 +2,4 @@
 #include "data.h"
 
 void start();
-void printP(const product &p);
+void printP(const product &p); // for testing

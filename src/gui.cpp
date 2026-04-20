@@ -1,54 +1,37 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <print>
-#include <chrono>
-
 #include "methods.h"
 #include "data.h"
-#include <conio.h>
 
-using std::cout, std::cin, std::vector, std::string, std::print;
+#include "tests.cpp"
 
-using namespace std::chrono;
+#include <FL/Fl.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Box.H>
+#include <FL/Fl_Group.H>
 
-int main()
+int main(int argc, char **argv)
 {
+  int window_h = 450;
+  int window_w = 550;
+  int header_h = 100;
+
+  Fl_Window *window = new Fl_Window(window_w, window_h, "Test");
+
+  Fl_Group *header_div = new Fl_Group(0, 0, window_w, header_h);
+  Fl_Box *title_header = new Fl_Box(20, 5, window_w, header_h, "Tracker stuff...");
+
+  title_header->labelfont(FL_BOLD + FL_ITALIC);
+  title_header->labelsize(36);
+
+  header_div->end();
+
+  window->end();
+  window->show(argc, argv);
+
   start();
-}
-
-void testPrint()
-{
-  product test;
-  test.name = "apple";
-  test.description = "testing";
-  test.price = 22.0;
-  test.qty = 22;
-
-  test.adv = advanceInfo{
-      year_month_day{year{2020}, month{9}, day{29}},
-      year_month_day{year{2022}, month{3}, day{19}}};
-
-  printP(test);
+  return Fl::run();
 }
 
 void start()
 {
-  print("Tracker APP\n");
-  testPrint();
-}
-
-void printP(const product &p)
-{
-  print("[{}] {} | qty: {} | ${:.2f}", p.name, *p.description, p.qty, p.price);
-
-  if (p.adv)
-  {
-    if (p.adv->purchase)
-      std::print(" | purchased: {}", *p.adv->purchase);
-    if (p.adv->expiry)
-      std::print(" | expires: {}", *p.adv->expiry);
-  }
-
-  print("\n");
+  // testPrint();
 }
