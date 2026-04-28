@@ -1,10 +1,12 @@
 #pragma once
 
+#include <FL/Fl.H>
+#include <FL/Fl_Box.H>
+
 #include <string>
 #include <optional>
 #include <chrono>
 
-using std::string;
 using namespace std::chrono;
 
 struct advanceInfo
@@ -15,9 +17,15 @@ struct advanceInfo
 
 struct product
 {
-  string name;
-  std::optional<string> description;
+  std::string name;
+  std::optional<std::string> description;
   int qty;
   double price;
   std::optional<advanceInfo> adv;
+};
+
+struct background
+{
+  Fl_Color bg_color = FL_DARK3;
+  Fl_Boxtype box_type = FL_FLAT_BOX;
 };
