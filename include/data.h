@@ -29,3 +29,21 @@ struct background
   Fl_Color bg_color = FL_DARK3;
   Fl_Boxtype box_type = FL_FLAT_BOX;
 };
+
+struct contianerDimensions
+{
+  int height;
+  int width;
+};
+
+struct inputDimensions
+{
+  int height;
+  int width;
+};
+
+struct imageDimensions
+{
+  int height;
+  int width;
+};

@@ -12,4 +12,3 @@ target_include_directories(TrackerProject PRIVATE include/)
 target_link_libraries(TrackerProject PRIVATE fltk)
 
 set_property(TARGET TrackerProject PROPERTY CXX_STANDARD 23)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
