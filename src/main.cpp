@@ -5,8 +5,6 @@
 
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
-#include <FL/Fl_Box.H>
-#include <FL/Fl_Group.H>
 
 int main(int argc, char **argv)
 {
@@ -18,11 +16,11 @@ int main(int argc, char **argv)
   Fl_Window *window = new Fl_Window(container.w, window_h, "Test");
 
   background bg;
-  GroupBuilder title(0, 0, container.w, container.h);
+  TextBuilder title(0, 0, container.w, container.h);
   title.setText(0, 0, container.w, container.h, "Tracking stuff...");
   title.setBG(bg);
 
-  GroupBuilder inputs(0, 200, 350, window_h - container.h);
+  TextBuilder inputs(0, 200, 350, window_h - container.h);
   inputs.setText(0, 0, 350, window_h - container.h, "Input here");
   inputs.setBG(bg);
 

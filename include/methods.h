@@ -9,17 +9,18 @@ void printP(const product &p); // for testing
 class IBuilder
 {
 public:
-  virtual void setText(int x, int y, int width, int height, std::string text) = 0;
+  virtual void setText(int x, int y, int width, int height, const char *label) = 0;
   virtual void setBG(std::optional<background> bg) = 0;
-  virtual ~IBuilder() = default; // what this do
+  virtual ~IBuilder() = default;
 };
 
-class GroupBuilder : public IBuilder
+class TextBuilder : public IBuilder
 {
 public:
-  GroupBuilder(int x, int y, int width, int height);
-  void setText(int x, int y, int width, int height, std::string text) override;
+  TextBuilder(int x, int y, int width, int height);
+  void setText(int x, int y, int width, int height, const char *label) override;
   void setBG(std::optional<background> bg) override;
+  void setBtn();
 
 private:
   int baseX;

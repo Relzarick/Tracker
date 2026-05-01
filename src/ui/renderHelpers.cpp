@@ -7,7 +7,7 @@
 #include <functional>
 #include <optional>
 
-GroupBuilder::GroupBuilder(int x, int y, int width, int height)
+TextBuilder::TextBuilder(int x, int y, int width, int height)
 {
   baseX = x;
   baseY = y;
@@ -16,20 +16,20 @@ GroupBuilder::GroupBuilder(int x, int y, int width, int height)
   group->end();
 }
 
-void GroupBuilder::setText(int x, int y, int width, int height, std::string label)
+void TextBuilder::setText(int x, int y, int width, int height, const char *label)
 {
-  storedLabel = label;
-
   group->begin();
-  Fl_Box *text = new Fl_Box(baseX + x, baseY + y, width, height, storedLabel.c_str());
+  Fl_Box *text = new Fl_Box(baseX + x, baseY + y, width, height, label);
   // create a struct for label fonts
+  // breaks encapsulation, use vector
+  // breaks if pass in runtime str
 
-  text->labelfont(FL_BOLD + FL_ITALIC);
+  text->labelfont(FL_BOLD);
   text->labelsize(36);
   group->end();
 }
 
-void GroupBuilder::setBG(std::optional<background> bg)
+void TextBuilder::setBG(std::optional<background> bg)
 {
   if (bg)
   {

@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
-project(Tracker)
+project(ItemTracker)
 
 find_package(FLTK CONFIG REQUIRED)
 
 add_executable(TrackerProject
-    src/gui.cpp
-    src/renderHelpers.cpp
+    src/main.cpp
+    src/ui/renderHelpers.cpp
 )
 
 target_include_directories(TrackerProject PRIVATE include/)
