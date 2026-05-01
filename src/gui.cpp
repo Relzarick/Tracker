@@ -10,13 +10,21 @@
 
 int main(int argc, char **argv)
 {
-  int window_h = 550;
-  int window_w = 600;
-  int header_h = 100;
+  int window_h = 750;
 
-  Fl_Window *window = new Fl_Window(window_w, window_h, "Test");
-  renderTitle(window_w, header_h);
-  renderInputs();
+  contianerDimensions container;
+  container.w = 700;
+
+  Fl_Window *window = new Fl_Window(container.w, window_h, "Test");
+
+  background bg;
+  GroupBuilder title(0, 0, container.w, container.h);
+  title.setText(0, 0, container.w, container.h, "Tracking stuff...");
+  title.setBG(bg);
+
+  GroupBuilder inputs(0, 200, 350, window_h - container.h);
+  inputs.setText(0, 0, 350, window_h - container.h, "Input here");
+  inputs.setBG(bg);
 
   window->end();
   window->show(argc, argv);
@@ -28,38 +36,4 @@ int main(int argc, char **argv)
 void start()
 {
   // testPrint();
-}
-
-void renderTitle(int width, int height)
-{
-  int x = 0, y = 0;
-
-  auto createBox = [&]()
-  {
-    Fl_Box *title_header = new Fl_Box(x + 20, y + 5, width, height, "Tracking stuff...");
-
-    title_header->labelfont(FL_BOLD + FL_ITALIC);
-    title_header->labelsize(36);
-  };
-
-  background bg;
-  createGroups(x, y, width, height, createBox, bg);
-}
-
-void renderInputs()
-{
-  int width = 300;
-  int height = 450;
-  int x = 0, y = 100;
-
-  auto createBox = [&]()
-  {
-    Fl_Box *title_header = new Fl_Box(x, y, width, height, "Input here");
-
-    title_header->labelfont(FL_BOLD + FL_ITALIC);
-    title_header->labelsize(36);
-  };
-
-  background bg;
-  createGroups(x, y, width, height, createBox, bg);
 }

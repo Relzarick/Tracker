@@ -32,18 +32,18 @@ struct background
 
 struct contianerDimensions
 {
-  int height;
-  int width;
+  int h = 200;
+  int w;
 };
 
 struct inputDimensions
 {
-  int height;
-  int width;
+  int h;
+  int w;
 };
 
 struct imageDimensions
 {
-  int height;
-  int width;
+  int h;
+  int w;
 };

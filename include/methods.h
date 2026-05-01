@@ -6,7 +6,24 @@
 void start();
 void printP(const product &p); // for testing
 
-void renderTitle(int, int);
-void renderInputs();
+class IBuilder
+{
+public:
+  virtual void setText(int x, int y, int width, int height, std::string text) = 0;
+  virtual void setBG(std::optional<background> bg) = 0;
+  virtual ~IBuilder() = default; // what this do
+};
 
-void createGroups(int x, int y, int width, int height, const std::function<void()> &content, std::optional<background> bg = std::nullopt);
+class GroupBuilder : public IBuilder
+{
+public:
+  GroupBuilder(int x, int y, int width, int height);
+  void setText(int x, int y, int width, int height, std::string text) override;
+  void setBG(std::optional<background> bg) override;
+
+private:
+  int baseX;
+  int baseY;
+  Fl_Group *group = nullptr;
+  std::string storedLabel;
+};
