@@ -4,7 +4,6 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Group.H>
 
-#include <functional>
 #include <optional>
 
 TextBuilder::TextBuilder(int x, int y, int width, int height)

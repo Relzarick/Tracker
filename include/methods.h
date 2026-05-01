@@ -1,7 +1,6 @@
 #pragma once
 
 #include "data.h"
-#include <functional>
 
 void start();
 void printP(const product &p); // for testing
