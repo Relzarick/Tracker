@@ -1,4 +1,4 @@
-#include "methods.h"
+#include "builder.h"
 #include "data.h"
 
 #include "tests.cpp"
@@ -6,8 +6,7 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
   int window_h = 750;
 
   contianerDimensions container;
@@ -24,14 +23,10 @@ int main(int argc, char **argv)
   inputs.setText(0, 0, 350, window_h - container.h, "Input here");
   inputs.setBG(bg);
 
+  insertTest();
+
   window->end();
   window->show(argc, argv);
 
-  start();
   return Fl::run();
-}
-
-void start()
-{
-  // testPrint();
 }

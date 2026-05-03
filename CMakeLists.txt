@@ -5,10 +5,12 @@ find_package(FLTK CONFIG REQUIRED)
 
 add_executable(TrackerProject
     src/main.cpp
-    src/ui/renderHelpers.cpp
+    src/ui/text.cpp
+    src/ui/button.cpp
+    src/ui/input.cpp
 )
 
-target_include_directories(TrackerProject PRIVATE include/)
+target_include_directories(TrackerProject PRIVATE src/ src/ui src/core)
 target_link_libraries(TrackerProject PRIVATE fltk)
 
 set_property(TARGET TrackerProject PROPERTY CXX_STANDARD 23)
