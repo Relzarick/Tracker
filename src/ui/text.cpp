@@ -1,4 +1,4 @@
-#include "builder.h"
+#include "builders.h"
 #include "data.h"
 
 #include <FL/Fl.H>
@@ -24,7 +24,7 @@ void TextBuilder::setText(int x, int y, int w, int h, const char *label) {
   group->end();
 }
 
-void TextBuilder::setBG(std::optional<background> bg) {
+void TextBuilder::setBG(const std::optional<background> &bg) {
   if (bg) {
     group->color(bg->bg_color);
     group->box(bg->box_type);

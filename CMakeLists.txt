@@ -1,7 +1,17 @@
 cmake_minimum_required(VERSION 3.20)
 project(ItemTracker)
 
+set(CMAKE_CXX_STANDARD 23)
+
 find_package(FLTK CONFIG REQUIRED)
+
+# SQLite amalgamation
+add_library(sqlite3 STATIC extern/sqlite3.c)
+target_include_directories(sqlite3 PUBLIC extern)
+
+if(UNIX)
+    target_link_libraries(sqlite3 PUBLIC dl pthread)
+endif()
 
 add_executable(TrackerProject
     src/main.cpp
@@ -11,6 +21,4 @@ add_executable(TrackerProject
 )
 
 target_include_directories(TrackerProject PRIVATE src/ src/ui src/core)
-target_link_libraries(TrackerProject PRIVATE fltk)
-
-set_property(TARGET TrackerProject PROPERTY CXX_STANDARD 23)
+target_link_libraries(TrackerProject PRIVATE fltk sqlite3)
