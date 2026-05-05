@@ -1,16 +1,18 @@
 #include "builders.h"
 #include "data.h"
 #include "methods.h"
+
+#include <FL/Fl.H>
+#include <FL/Fl_Input.H>
 #include <sqlite3.h>
 
-#include <FL/Fl_Input.H>
 #include <print>
 
 using std::print;
 
 void insertTest() {
   // testPrint();
-  // createInput();
+  createInput();
   createDB();
 }
 
@@ -42,7 +44,8 @@ void printP(const product &p) {
 }
 
 void createInput() {
-  TextBuilder *title = new TextBuilder(500, 450, 100, 100);
+  rect size{500, 450, 100, 100};
+  TextBuilder *title = new TextBuilder(size);
   background bg;
   title->setBG(bg);
 
@@ -58,7 +61,9 @@ void createInput() {
 
         stored = input->value();
 
-        title->setText(0, 0, 100, 100, stored.c_str());
+        rect r{.w = 100, .h = 100};
+
+        title->setText(r, stored.c_str());
         title->getGroup()->redraw();
       },
       title);
@@ -88,3 +93,7 @@ void createDB() {
   sqlite3_finalize(stmt);
   sqlite3_close(db);
 }
+
+// void builderDirector(IBuilder builder) {
+
+// }

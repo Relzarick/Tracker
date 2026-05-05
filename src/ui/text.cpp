@@ -6,17 +6,17 @@
 
 #include <optional>
 
-TextBuilder::TextBuilder(int x, int y, int w, int h) {
-  baseX = x;
-  baseY = y;
+TextBuilder::TextBuilder(rect size) {
+  base = size;
 
-  group = new Fl_Group(x, y, w, h);
+  group = new Fl_Group(size.x, size.y, size.w, size.h);
   group->end();
 }
 
-void TextBuilder::setText(int x, int y, int w, int h, const char *label) {
+void TextBuilder::setText(rect rect, const char *label) {
   group->begin();
-  Fl_Box *text = new Fl_Box(baseX + x, baseY + y, w, h, label);
+  Fl_Box *text =
+      new Fl_Box(base.x + rect.x, base.y + rect.y, rect.w, rect.h, label);
   // create a struct for label fonts
 
   text->labelfont(FL_BOLD);

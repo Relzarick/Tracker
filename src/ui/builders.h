@@ -6,31 +6,47 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Group.H>
 
+#include <FL/Fl_Input.H>
 #include <optional>
 #include <string>
 
 class TextBuilder : public IBuilder {
 public:
-  TextBuilder(int x, int y, int w, int h);
+  TextBuilder(rect size);
   Fl_Group *getGroup() override;
 
-  void setText(int x, int y, int w, int h, const char *label);
   void setBG(const std::optional<background> &bg) override;
+  void setText(rect rect, const char *label);
 
 private:
-  int baseX;
-  int baseY;
-
+  rect base;
   Fl_Group *group = nullptr;
   std::string storedLabel;
 };
 
 class BtnBuilder : public IBuilder {
 public:
+  BtnBuilder(rect size);
+  Fl_Group *getGroup() override;
+
+  void setBG(const std::optional<background> &bg) override;
+  void setBtn(rect size);
+
 private:
+  rect base;
+  Fl_Group *group = nullptr;
 };
 
 class InputBuilder : public IBuilder {
 public:
+  InputBuilder(rect size);
+  Fl_Group *getGroup() override;
+
+  void setBG(const std::optional<background> &bg) override;
+  Fl_Input *getInput();
+
 private:
+  rect base;
+  Fl_Group *group = nullptr;
+  Fl_Input *input = nullptr;
 };

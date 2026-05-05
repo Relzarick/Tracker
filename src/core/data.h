@@ -3,20 +3,18 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 
-#include <string>
-#include <optional>
 #include <chrono>
+#include <optional>
+#include <string>
 
 using namespace std::chrono;
 
-struct advanceInfo
-{
+struct advanceInfo {
   std::optional<year_month_day> purchase;
   std::optional<year_month_day> expiry;
 };
 
-struct product
-{
+struct product {
   std::string name;
   std::optional<std::string> description;
   int qty;
@@ -24,26 +22,33 @@ struct product
   std::optional<advanceInfo> adv;
 };
 
-struct background
-{
+struct background {
   Fl_Color bg_color = FL_DARK3;
   Fl_Boxtype box_type = FL_FLAT_BOX;
 };
 
-struct contianerDimensions
-{
+struct labelFont {
+  // find the type used by fltk
+};
+
+struct contianerDimensions {
   int h = 200;
   int w;
 };
 
-struct inputDimensions
-{
+struct inputDimensions {
   int h;
   int w;
 };
 
-struct imageDimensions
-{
+struct imageDimensions {
   int h;
   int w;
+};
+
+struct rect {
+  int x = 0;
+  int y = 0;
+  int w;
+  int h;
 };
