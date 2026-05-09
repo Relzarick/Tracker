@@ -18,6 +18,8 @@ add_executable(TrackerProject
     src/ui/text.cpp
     src/ui/button.cpp
     src/ui/input.cpp
+    src/testDB.cpp
+    src/ui/director.cpp
 )
 
 target_include_directories(TrackerProject PRIVATE src/ src/ui src/core)

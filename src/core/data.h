@@ -1,5 +1,6 @@
 #pragma once
 
+#include <FL/Enumerations.H>
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 
@@ -24,7 +25,7 @@ struct product {
 
 struct background {
   Fl_Color bg_color = FL_DARK3;
-  Fl_Boxtype box_type = FL_FLAT_BOX;
+  Fl_Boxtype box_type = FL_ROUNDED_BOX;
 };
 
 struct labelFont {
@@ -49,6 +50,6 @@ struct imageDimensions {
 struct rect {
   int x = 0;
   int y = 0;
-  int w;
-  int h;
+  int w = 0;
+  int h = 0;
 };

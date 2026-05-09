@@ -10,6 +10,7 @@
 class IBuilder {
 public:
   virtual void setBG(const std::optional<background> &bg) = 0;
+  // virtual void determinePos(int tw, int th) = 0;
   virtual Fl_Group *getGroup() = 0;
 
   virtual ~IBuilder() = default;
