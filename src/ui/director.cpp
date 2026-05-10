@@ -2,16 +2,16 @@
 #include "builders.h"
 #include "data.h"
 
-void Director::constructText(TextBuilder &builder) {
+void Director::constructEntry(TextBuilder &builder) {
   background bg;
   builder.setBG(bg);
 
-  builder.setText(rect{.x = -200, .y = -100}, "Product name");
-  builder.setText(rect{.x = -200, .y = -90}, "290");
-  builder.setText(rect{.x = -180, .y = -100}, "$424.20");
+  builder.setText(entryLayout.header, "Product name");
+  builder.setText(entryLayout.price, "$424.20");
+  builder.setText(entryLayout.qty, "QTY: 290");
 
   builder.setText(
-      rect{.x = 0, .y = 0},
+      entryLayout.description,
       "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
       "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
 

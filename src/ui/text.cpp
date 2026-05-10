@@ -28,6 +28,7 @@ void TextBuilder::setText(rect offset, const char *label) {
 
   Fl_Box *text = new Fl_Box(textPos.x, textPos.y, base.w, base.h, label);
 
+  text->align(FL_ALIGN_LEFT | FL_ALIGN_TOP | FL_ALIGN_INSIDE);
   text->labelfont(FL_BOLD);
   text->labelsize(24);
 
@@ -43,8 +44,9 @@ void TextBuilder::determinePos(int &tw, int &th, const char *label) {
   std::print("NEW POS: x={} y={}\n\n", textPos.x + tw, textPos.y + th);
 
   // calc textPos + offset = next available space
-  // check if inside the taken space,
-  // shift by one to the right till it free
+
+  // There should be set positions, setText take a string that specifies where
+  // to place. caller dont determine where it is located
 }
 
 void TextBuilder::setBG(const std::optional<background> &bg) {
