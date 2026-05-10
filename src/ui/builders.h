@@ -12,19 +12,17 @@
 
 class TextBuilder : public IBuilder {
 public:
-  TextBuilder(const rect &pos);
+  TextBuilder(const rect &groupRect);
   Fl_Group *getGroup() override;
 
   void setBG(const std::optional<background> &bg) override;
-  void setText(const rect &offset, const char *label);
+  void setText(const rect &offset, const char *label, bool wrap = false);
 
 private:
-  rect base;
+  rect baseRect;
   rect textPos;
   Fl_Group *group = nullptr;
   std::string storedLabel;
-
-  void determinePos(int &tw, int &th, const char *label);
 };
 
 class BtnBuilder : public IBuilder {

@@ -8,44 +8,35 @@
 #include <FL/fl_draw.H>
 
 #include <optional>
-#include <print>
 
-TextBuilder::TextBuilder(const rect &size) {
-  base = size;
+TextBuilder::TextBuilder(const rect &rect) {
+  baseRect = rect;
 
-  group = new Fl_Group(size.x, size.y, size.w, size.h);
-  group->clip_children(1);
+  group = new Fl_Group(rect.x, rect.y, rect.w, rect.h);
+  // group->clip_children(1);
   group->end();
 }
 
-void TextBuilder::setText(const rect &offset, const char *label) {
+void TextBuilder::setText(const rect &offset, const char *label, bool wrap) {
   group->begin();
 
-  int tw = 0, th = 0;
-  textPos = {.x = base.x + offset.x, .y = base.y + offset.y};
+  int tw = baseRect.w, th = baseRect.h;
 
-  determinePos(tw, th, label);
-
-  Fl_Box *box = new Fl_Box(textPos.x, textPos.y, base.w, base.h, label);
-
-  box->align(FL_ALIGN_LEFT | FL_ALIGN_TOP | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
-  box->labelfont(FL_BOLD);
-  box->labelsize(22);
-  // box->box(FL_BORDER_FRAME);
-
-  group->end();
-}
-
-void TextBuilder::determinePos(int &tw, int &th, const char *label) {
-  fl_font(FL_BOLD, 24);
+  fl_font(FL_BOLD, 22);
   fl_measure(label, tw, th);
 
-  std::print("PX:      w={} h={}\n", tw, th);
-  std::print("POS:     x={} y={}\n", textPos.x, textPos.y);
-  std::print("NEW POS: x={} y={}\n\n", textPos.x + tw, textPos.y + th);
+  textPos = {.x = baseRect.x + offset.x, .y = baseRect.y + offset.y};
+  Fl_Box *box = new Fl_Box(textPos.x, textPos.y, tw, th, label);
 
-  // calc textPos + offset = next available space
-  // ? work on making it auto adjust
+  if (wrap)
+    box->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
+
+  box->labelfont(FL_BOLD);
+  box->labelsize(22);
+  box->box(FL_BORDER_FRAME);
+  box->tooltip("test");
+
+  group->end();
 }
 
 void TextBuilder::setBG(const std::optional<background> &bg) {

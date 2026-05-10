@@ -13,8 +13,6 @@ void Director::constructEntry(TextBuilder &builder) {
   builder.setText(
       entryLayout.description,
       "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-      "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-
-  // size should be standard
-  // create a way to track all text locations
+      "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      true);
 };
