@@ -20,6 +20,7 @@ struct product {
   std::optional<std::string> description;
   int qty;
   double price;
+  double total_costs;
   std::optional<advanceInfo> adv;
 };
 

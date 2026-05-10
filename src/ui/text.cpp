@@ -10,7 +10,7 @@
 #include <optional>
 #include <print>
 
-TextBuilder::TextBuilder(rect size) {
+TextBuilder::TextBuilder(const rect &size) {
   base = size;
 
   group = new Fl_Group(size.x, size.y, size.w, size.h);
@@ -18,7 +18,7 @@ TextBuilder::TextBuilder(rect size) {
   group->end();
 }
 
-void TextBuilder::setText(rect offset, const char *label) {
+void TextBuilder::setText(const rect &offset, const char *label) {
   group->begin();
 
   int tw = 0, th = 0;
@@ -26,11 +26,12 @@ void TextBuilder::setText(rect offset, const char *label) {
 
   determinePos(tw, th, label);
 
-  Fl_Box *text = new Fl_Box(textPos.x, textPos.y, base.w, base.h, label);
+  Fl_Box *box = new Fl_Box(textPos.x, textPos.y, base.w, base.h, label);
 
-  text->align(FL_ALIGN_LEFT | FL_ALIGN_TOP | FL_ALIGN_INSIDE);
-  text->labelfont(FL_BOLD);
-  text->labelsize(24);
+  box->align(FL_ALIGN_LEFT | FL_ALIGN_TOP | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
+  box->labelfont(FL_BOLD);
+  box->labelsize(22);
+  // box->box(FL_BORDER_FRAME);
 
   group->end();
 }
@@ -44,16 +45,12 @@ void TextBuilder::determinePos(int &tw, int &th, const char *label) {
   std::print("NEW POS: x={} y={}\n\n", textPos.x + tw, textPos.y + th);
 
   // calc textPos + offset = next available space
-
-  // There should be set positions, setText take a string that specifies where
-  // to place. caller dont determine where it is located
+  // ? work on making it auto adjust
 }
 
 void TextBuilder::setBG(const std::optional<background> &bg) {
-  if (bg) {
-    group->color(bg->bg_color);
-    group->box(bg->box_type);
-  }
+  group->color(bg->bg_color);
+  group->box(bg->box_type);
 }
 
 Fl_Group *TextBuilder::getGroup() { return group; }

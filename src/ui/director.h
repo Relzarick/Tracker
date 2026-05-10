@@ -17,7 +17,7 @@ public:
 private:
   IBuilder *builder = nullptr;
   Layout entryLayout{.header = {.x = 10, .y = 10},
-                     .price = {.x = 10, .y = 35},
+                     .price = {.x = 10, .y = 40},
                      .qty = {.x = 180, .y = 10},
                      .description = {.x = 10, .y = 100}};
 };

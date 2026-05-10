@@ -12,11 +12,11 @@
 
 class TextBuilder : public IBuilder {
 public:
-  TextBuilder(rect pos);
+  TextBuilder(const rect &pos);
   Fl_Group *getGroup() override;
 
   void setBG(const std::optional<background> &bg) override;
-  void setText(rect offset, const char *label);
+  void setText(const rect &offset, const char *label);
 
 private:
   rect base;

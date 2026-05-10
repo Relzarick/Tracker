@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
 
   Fl_Window *window = new Fl_Window(container.w, window_h, "Test");
 
-  TextBuilder title(rect{.x = 20, .y = 150, .w = 500, .h = 250});
+  TextBuilder title(rect{.x = 10, .y = 150, .w = 680, .h = 250});
   dir.constructEntry(title);
 
   // TextBuilder inputs(rect{.y = 200, .w = 350, .h = window_h - container.h});
