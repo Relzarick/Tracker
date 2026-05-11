@@ -13,7 +13,6 @@ TextBuilder::TextBuilder(const rect &rect) {
   baseRect = rect;
 
   group = new Fl_Group(rect.x, rect.y, rect.w, rect.h);
-  // group->clip_children(1);
   group->end();
 }
 

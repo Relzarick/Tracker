@@ -6,6 +6,7 @@
 class Director {
 public:
   void constructEntry(TextBuilder &builder);
+  void constructAddBtn(BtnBuilder &builder);
 
 private:
   IBuilder *builder = nullptr;

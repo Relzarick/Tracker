@@ -27,7 +27,7 @@ private:
 
 class BtnBuilder : public IBuilder {
 public:
-  BtnBuilder(rect size);
+  BtnBuilder(const rect &groupRect);
   Fl_Group *getGroup() override;
 
   void setBG(const std::optional<background> &bg) override;

@@ -23,3 +23,10 @@ void Director::constructEntry(TextBuilder &builder) {
       "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       desc);
 };
+
+void Director::constructAddBtn(BtnBuilder &builder) {
+  background bg;
+  builder.setBG(bg);
+
+  // need callback?
+}
