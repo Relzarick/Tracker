@@ -17,16 +17,15 @@ TextBuilder::TextBuilder(const rect &rect) {
   group->end();
 }
 
-void TextBuilder::setText(const rect &offset, const char *label,
-                          const xx &settings) {
+void TextBuilder::setText(const char *label, const layout &settings) {
   group->begin();
 
   int tw = baseRect.w, th = baseRect.h;
+  textPos = {.x = baseRect.x + settings.pos.x,
+             .y = baseRect.y + settings.pos.y};
 
   fl_font(settings.font, settings.fontSize);
   fl_measure(label, tw, th);
-
-  textPos = {.x = baseRect.x + offset.x, .y = baseRect.y + offset.y};
   Fl_Box *box = new Fl_Box(textPos.x, textPos.y, tw, th, label);
 
   if (settings.wrap)

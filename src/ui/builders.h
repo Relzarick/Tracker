@@ -16,7 +16,7 @@ public:
   Fl_Group *getGroup() override;
 
   void setBG(const std::optional<background> &bg) override;
-  void setText(const rect &offset, const char *label, const xx &settings);
+  void setText(const char *label, const layout &settings);
 
 private:
   rect baseRect;

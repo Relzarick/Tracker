@@ -7,17 +7,18 @@ void Director::constructEntry(TextBuilder &builder) {
   background bg;
   builder.setBG(bg);
 
-  xx header{.tooltip = "Entry name"};
-  xx price{.tooltip = "purchased price"};
-  xx qty{.tooltip = "Quantity remaining"};
-  xx desc{.tooltip = "Description of the entry", .wrap = true};
+  layout header{.tooltip = "Entry name", .pos = {.x = 10, .y = 10}};
+  layout price{.tooltip = "purchased price", .pos = {.x = 10, .y = 40}};
+  layout qty{.tooltip = "Quantity remaining", .pos = {.x = 180, .y = 10}};
+  layout desc{.tooltip = "Description of the entry",
+              .wrap = true,
+              .pos = {.x = 10, .y = 100}};
 
-  builder.setText(entryLayout.header, "Product name", header);
-  builder.setText(entryLayout.price, "$424.20", price);
-  builder.setText(entryLayout.qty, "QTY: 290", qty);
+  builder.setText("Product name", header);
+  builder.setText("$424.20", price);
+  builder.setText("QTY: 290", qty);
 
   builder.setText(
-      entryLayout.description,
       "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
       "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       desc);

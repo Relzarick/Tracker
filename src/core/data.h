@@ -29,21 +29,12 @@ struct background {
   Fl_Boxtype box_type = FL_ROUNDED_BOX;
 };
 
-struct labelFont {
-  // find the type used by fltk
-};
-
 struct contianerDimensions {
   int h = 200;
   int w;
 };
 
 struct inputDimensions {
-  int h;
-  int w;
-};
-
-struct imageDimensions {
   int h;
   int w;
 };
@@ -55,9 +46,10 @@ struct rect {
   int h = 0;
 };
 
-struct xx {
+struct layout {
   const char *tooltip;
   bool wrap = false;
   int fontSize = 22;
   Fl_Font font = FL_COURIER;
+  rect pos;
 };
