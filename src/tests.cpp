@@ -62,7 +62,7 @@ void createInput() {
 
         rect r{.w = 100, .h = 100};
 
-        title->setText(r, stored.c_str());
+        // title->setText(r, stored.c_str());
         title->getGroup()->redraw();
       },
       title);

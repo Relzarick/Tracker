@@ -17,24 +17,25 @@ TextBuilder::TextBuilder(const rect &rect) {
   group->end();
 }
 
-void TextBuilder::setText(const rect &offset, const char *label, bool wrap) {
+void TextBuilder::setText(const rect &offset, const char *label,
+                          const xx &settings) {
   group->begin();
 
   int tw = baseRect.w, th = baseRect.h;
 
-  fl_font(FL_BOLD, 22);
+  fl_font(settings.font, settings.fontSize);
   fl_measure(label, tw, th);
 
   textPos = {.x = baseRect.x + offset.x, .y = baseRect.y + offset.y};
   Fl_Box *box = new Fl_Box(textPos.x, textPos.y, tw, th, label);
 
-  if (wrap)
+  if (settings.wrap)
     box->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
 
-  box->labelfont(FL_BOLD);
-  box->labelsize(22);
+  box->labelfont(settings.font);
+  box->labelsize(settings.fontSize);
   box->box(FL_BORDER_FRAME);
-  box->tooltip("test");
+  box->tooltip(settings.tooltip);
 
   group->end();
 }

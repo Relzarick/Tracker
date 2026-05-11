@@ -54,3 +54,10 @@ struct rect {
   int w = 0;
   int h = 0;
 };
+
+struct xx {
+  const char *tooltip;
+  bool wrap = false;
+  int fontSize = 22;
+  Fl_Font font = FL_COURIER;
+};
