@@ -28,17 +28,3 @@ void createDB() {
   sqlite3_finalize(stmt);
   sqlite3_close(db);
 }
-
-void initDB(const char *dbName) {
-  sqlite3 *db;
-
-  sqlite3_open(dbName, &db);
-
-  sqlite3_close(db);
-}
-
-void insertDB() {}
-
-void editTable() {}
-
-// change to class
