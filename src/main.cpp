@@ -4,7 +4,9 @@
 #include "tests.cpp"
 #include "ui/director.h"
 
+#include <FL/Enumerations.H>
 #include <FL/Fl.H>
+#include <FL/Fl_Tooltip.H>
 #include <FL/Fl_Window.H>
 
 int main(int argc, char **argv) {
@@ -14,6 +16,9 @@ int main(int argc, char **argv) {
   contianerDimensions container{.w = 700};
 
   Fl_Window *window = new Fl_Window(container.w, window_h, "Test");
+
+  Fl_Tooltip::font(FL_COURIER);
+  Fl_Tooltip::color(FL_WHITE);
 
   TextBuilder title(rect{.x = 10, .y = 150, .w = 680, .h = 250});
   dir.constructEntry(title);
