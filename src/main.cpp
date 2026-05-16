@@ -22,13 +22,13 @@ int main(int argc, char **argv) {
   sc.scrollbar.color(sc.color());
 
   Fl_Pack pack(x, 0, divWidth, height);
-  pack.spacing(4);
+  pack.spacing(16);
 
   Fl::visible_focus(0);
   Fl_Tooltip::font(FL_COURIER);
   Fl_Tooltip::color(fl_rgb_color(242, 240, 239));
 
-  Director dir = Director(&pack, &sc);
+  Director dir = Director(&pack);
 
   TextBuilder title(rect{.w = divWidth, .h = 250});
   dir.constructEntry(title);

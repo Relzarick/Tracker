@@ -1,7 +1,5 @@
 #pragma once
 
-#include <FL/Enumerations.H>
-#include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 
 #include <chrono>

@@ -1,7 +1,6 @@
 #include "builders.h"
 #include "data.h"
 
-#include <FL/Enumerations.H>
 #include <optional>
 
 #include <FL/Fl.H>
@@ -16,8 +15,6 @@ BtnBuilder::BtnBuilder(const rect &rect) {
 }
 
 void BtnBuilder::setBtn(const layout &settings) {
-  group->begin();
-
   Fl_Button *btn = new Fl_Button(base.x, base.y, base.w, base.h);
   this->btn = btn;
 
@@ -26,8 +23,6 @@ void BtnBuilder::setBtn(const layout &settings) {
 
   btn->color(FL_WHITE);
   btn->selection_color(fl_rgb_color(242, 240, 239));
-
-  group->end();
 }
 
 void BtnBuilder::setBG(const std::optional<background> &bg) {

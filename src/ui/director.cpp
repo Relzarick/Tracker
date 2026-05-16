@@ -1,17 +1,13 @@
 #include "director.h"
 #include "builders.h"
 #include "data.h"
-#include <FL/Fl_Button.H>
 
+#include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Pack.H>
-#include <FL/Fl_Scroll.H>
 #include <FL/Fl_Window.H>
 
-Director::Director(Fl_Pack *pack, Fl_Scroll *scroll) {
-  this->pack = pack;
-  this->scroll = scroll;
-}
+Director::Director(Fl_Pack *pack) { this->pack = pack; }
 
 void Director::constructEntry(TextBuilder &builder) {
   builder.getGroup()->begin();
@@ -38,23 +34,23 @@ void Director::constructEntry(TextBuilder &builder) {
 };
 
 void Director::constructAddBtn(BtnBuilder &builder) {
+  builder.getGroup()->begin();
   builder.setBtn(layout{});
 
   Fl_Button *btn = builder.getBtn();
+  addBtnData *data = new addBtnData{this, btn};
 
   btn->callback(
       [](Fl_Widget *w, void *data) {
-        Director *dir = static_cast<Director *>(data);
+        auto *d = static_cast<addBtnData *>(data);
 
-        TextBuilder builder(rect{.x = 10, .y = 180, .w = 680, .h = 250});
-        // dir->entryList.push_back(builder);
+        TextBuilder builder(rect{.w = 660, .h = 250});
+        d->dir->constructEntry(builder);
+        d->dir->pack->insert(*d->btn->parent(), d->dir->pack->children());
 
-        // std::print("entryList size: {}\n", dir->entryList.size());
-
-        // dir->renderEntryList();
-        // w->window()->redraw();
+        w->window()->redraw();
       },
-      this);
+      data);
 
-  pack->add(btn);
+  builder.getGroup()->end();
 }
