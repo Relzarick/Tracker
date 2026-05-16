@@ -41,11 +41,3 @@ struct layout {
   Fl_Font font = FL_COURIER;
   rect pos;
 };
-
-struct layout {
-  const char *tooltip;
-  bool wrap = false;
-  int fontSize = 22;
-  Fl_Font font = FL_COURIER;
-  rect pos;
-};
