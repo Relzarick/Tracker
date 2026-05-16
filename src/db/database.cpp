@@ -1,4 +1,5 @@
 #include "database.h"
+#include <optional>
 #include <sqlite3.h>
 
 DB::DB(const char *name) {
@@ -15,6 +16,15 @@ DB::DB(const char *name) {
 
 void DB::insertData() {}
 void DB::editTable() {}
+
+// * sql struct, query and msg
+// go back and test the struct
+
+struct test {
+  const char *query;
+  std::optional<char> err;
+};
+
 void DB::createProcedure(const char *query) {
   // access the vector
   // auto test = procedures[1];
@@ -25,4 +35,4 @@ void DB::createProcedure(const char *query) {
   // sqlite3_prepare_v2(*db, query, -1, insert into vector, nullptr);
 }
 
-void DB::callProcedure() {} //? pass in pointer?
+// void DB::callProcedure() {} //? pass in pointer?
