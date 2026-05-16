@@ -25,18 +25,8 @@ struct product {
 };
 
 struct background {
-  Fl_Color bg_color = FL_DARK3;
+  Fl_Color bg_color = FL_WHITE;
   Fl_Boxtype box_type = FL_ROUNDED_BOX;
-};
-
-struct contianerDimensions {
-  int h = 200;
-  int w;
-};
-
-struct inputDimensions {
-  int h;
-  int w;
 };
 
 struct rect {

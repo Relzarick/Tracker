@@ -12,7 +12,7 @@ using std::print;
 void insertTest() {
   // testPrint();
   createInput();
-  createDB();
+  // createDB();
 }
 
 void testPrint() {

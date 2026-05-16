@@ -1,36 +1,47 @@
 #include "builders.h"
 #include "data.h"
-
 #include "tests.cpp"
 #include "ui/director.h"
 
-#include <FL/Enumerations.H>
 #include <FL/Fl.H>
+#include <FL/Fl_Pack.H>
+#include <FL/Fl_Scroll.H>
 #include <FL/Fl_Tooltip.H>
 #include <FL/Fl_Window.H>
 
 int main(int argc, char **argv) {
-  int window_h = 750;
+  int width = 700;
+  int height = 750;
+  int x = 15;
+  int divWidth = 660;
 
-  Director dir = Director();
-  contianerDimensions container{.w = 700};
+  Fl_Window window(width, height, "Tracker");
+  Fl_Scroll sc(0, 0, width, height);
 
-  Fl_Window *window = new Fl_Window(container.w, window_h, "Test");
+  sc.type(Fl_Scroll::VERTICAL);
+  sc.scrollbar.color(sc.color());
 
+  Fl_Pack pack(x, 0, divWidth, height);
+  pack.spacing(4);
+
+  Fl::visible_focus(0);
   Fl_Tooltip::font(FL_COURIER);
-  Fl_Tooltip::color(FL_WHITE);
+  Fl_Tooltip::color(fl_rgb_color(242, 240, 239));
 
-  TextBuilder title(rect{.x = 10, .y = 150, .w = 680, .h = 250});
+  Director dir = Director(&pack, &sc);
+
+  TextBuilder title(rect{.w = divWidth, .h = 250});
   dir.constructEntry(title);
 
-  // TextBuilder inputs(rect{.y = 200, .w = 350, .h = window_h - container.h});
-  // inputs.setText(rect{.w = 350, .h = window_h - container.h}, "Input here");
-  // inputs.setBG(bg);
+  BtnBuilder btn(rect{.w = divWidth, .h = 95});
+  dir.constructAddBtn(btn);
 
   // insertTest();
 
-  window->end();
-  window->show(argc, argv);
+  pack.end();
+  sc.end();
+  window.end();
+  window.show(argc, argv);
 
   return Fl::run();
 }

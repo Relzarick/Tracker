@@ -1,11 +1,21 @@
 #include "director.h"
 #include "builders.h"
 #include "data.h"
-#include <FL/Enumerations.H>
+#include <FL/Fl_Button.H>
+
+#include <FL/Fl_Group.H>
+#include <FL/Fl_Pack.H>
+#include <FL/Fl_Scroll.H>
+#include <FL/Fl_Window.H>
+
+Director::Director(Fl_Pack *pack, Fl_Scroll *scroll) {
+  this->pack = pack;
+  this->scroll = scroll;
+}
 
 void Director::constructEntry(TextBuilder &builder) {
-  background bg;
-  builder.setBG(bg);
+  builder.getGroup()->begin();
+  builder.setBG(background{});
 
   layout header{.tooltip = "Entry name", .pos = {.x = 10, .y = 10}};
   layout price{.tooltip = "purchased price", .pos = {.x = 10, .y = 40}};
@@ -22,11 +32,29 @@ void Director::constructEntry(TextBuilder &builder) {
       "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
       "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       desc);
+
+  builder.getGroup()->end();
+  pack->add(builder.getGroup());
 };
 
 void Director::constructAddBtn(BtnBuilder &builder) {
-  background bg;
-  builder.setBG(bg);
+  builder.setBtn(layout{});
 
-  // need callback?
+  Fl_Button *btn = builder.getBtn();
+
+  btn->callback(
+      [](Fl_Widget *w, void *data) {
+        Director *dir = static_cast<Director *>(data);
+
+        TextBuilder builder(rect{.x = 10, .y = 180, .w = 680, .h = 250});
+        // dir->entryList.push_back(builder);
+
+        // std::print("entryList size: {}\n", dir->entryList.size());
+
+        // dir->renderEntryList();
+        // w->window()->redraw();
+      },
+      this);
+
+  pack->add(btn);
 }

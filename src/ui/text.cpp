@@ -17,11 +17,8 @@ TextBuilder::TextBuilder(const rect &rect) {
 }
 
 void TextBuilder::setText(const char *label, const layout &settings) {
-  group->begin();
-
   int tw = baseRect.w, th = baseRect.h;
-  textPos = {.x = baseRect.x + settings.pos.x,
-             .y = baseRect.y + settings.pos.y};
+  textPos = {.x = settings.pos.x, .y = settings.pos.y};
 
   fl_font(settings.font, settings.fontSize);
   fl_measure(label, tw, th);
@@ -32,10 +29,7 @@ void TextBuilder::setText(const char *label, const layout &settings) {
 
   box->labelfont(settings.font);
   box->labelsize(settings.fontSize);
-  box->box(FL_BORDER_FRAME);
   box->tooltip(settings.tooltip);
-
-  group->end();
 }
 
 void TextBuilder::setBG(const std::optional<background> &bg) {
