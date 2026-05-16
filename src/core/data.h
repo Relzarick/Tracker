@@ -1,7 +1,5 @@
 #pragma once
 
-#include <FL/Enumerations.H>
-#include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 
 #include <chrono>
@@ -25,27 +23,8 @@ struct product {
 };
 
 struct background {
-  Fl_Color bg_color = FL_DARK3;
+  Fl_Color bg_color = FL_WHITE;
   Fl_Boxtype box_type = FL_ROUNDED_BOX;
-};
-
-struct labelFont {
-  // find the type used by fltk
-};
-
-struct contianerDimensions {
-  int h = 200;
-  int w;
-};
-
-struct inputDimensions {
-  int h;
-  int w;
-};
-
-struct imageDimensions {
-  int h;
-  int w;
 };
 
 struct rect {
@@ -53,4 +32,12 @@ struct rect {
   int y = 0;
   int w = 0;
   int h = 0;
+};
+
+struct layout {
+  const char *tooltip;
+  bool wrap = false;
+  int fontSize = 22;
+  Fl_Font font = FL_COURIER;
+  rect pos;
 };

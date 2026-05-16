@@ -1,23 +1,21 @@
 #pragma once
 
 #include "builders.h"
-#include "iBuilder.h"
 
-struct Layout {
-  rect header;
-  rect price;
-  rect qty;
-  rect description;
-};
+#include <FL/Fl_Pack.H>
+#include <Fl/Fl_Button.H>
 
 class Director {
 public:
+  Director(Fl_Pack *pack);
   void constructEntry(TextBuilder &builder);
+  void constructAddBtn(BtnBuilder &builder);
 
 private:
-  IBuilder *builder = nullptr;
-  Layout entryLayout{.header = {.x = 10, .y = 10},
-                     .price = {.x = 10, .y = 40},
-                     .qty = {.x = 180, .y = 10},
-                     .description = {.x = 10, .y = 100}};
+  Fl_Pack *pack = nullptr;
+};
+
+struct addBtnData {
+  Director *dir;
+  Fl_Button *btn;
 };

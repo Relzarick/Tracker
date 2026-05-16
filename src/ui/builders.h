@@ -4,6 +4,7 @@
 #include "iBuilder.h"
 
 #include <FL/Fl.H>
+#include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 
 #include <FL/Fl_Input.H>
@@ -16,7 +17,7 @@ public:
   Fl_Group *getGroup() override;
 
   void setBG(const std::optional<background> &bg) override;
-  void setText(const rect &offset, const char *label, bool wrap = false);
+  void setText(const char *label, const layout &settings);
 
 private:
   rect baseRect;
@@ -27,15 +28,17 @@ private:
 
 class BtnBuilder : public IBuilder {
 public:
-  BtnBuilder(rect size);
+  BtnBuilder(const rect &groupRect);
   Fl_Group *getGroup() override;
+  Fl_Button *getBtn();
 
   void setBG(const std::optional<background> &bg) override;
-  void setBtn(rect size);
+  void setBtn(const layout &settings);
 
 private:
   rect base;
   Fl_Group *group = nullptr;
+  Fl_Button *btn = nullptr;
 };
 
 class InputBuilder : public IBuilder {
