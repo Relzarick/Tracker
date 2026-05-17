@@ -28,8 +28,6 @@ void BtnBuilder::setBtn(const layout &settings) {
 void BtnBuilder::setBG(const std::optional<background> &bg) {
   group->color(bg->bg_color);
   group->box(bg->box_type);
-  group->color(bg->bg_color);
-  group->box(bg->box_type);
 };
 
 Fl_Group *BtnBuilder::getGroup() { return group; }

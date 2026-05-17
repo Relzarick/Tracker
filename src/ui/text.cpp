@@ -21,13 +21,11 @@ void TextBuilder::setText(const char *label, const layout &settings) {
   textPos = {.x = settings.pos.x, .y = settings.pos.y};
 
   fl_font(settings.font, settings.fontSize);
-  fl_font(settings.font, settings.fontSize);
   fl_measure(label, tw, th);
   Fl_Box *box = new Fl_Box(textPos.x, textPos.y, tw, th, label);
 
   if (settings.wrap)
-    if (settings.wrap)
-      box->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
+    box->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
 
   box->labelfont(settings.font);
   box->labelsize(settings.fontSize);
