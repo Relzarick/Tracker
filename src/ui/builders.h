@@ -4,12 +4,12 @@
 #include "iBuilder.h"
 
 #include <FL/Fl.H>
+#include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 
 #include <FL/Fl_Input.H>
 #include <optional>
-#include <string>
 
 class TextBuilder : public IBuilder {
 public:
@@ -17,28 +17,25 @@ public:
   Fl_Group *getGroup() override;
 
   void setBG(const std::optional<background> &bg) override;
-  void setText(const char *label, const layout &settings);
+  Fl_Box *setText(const char *label, const layout &settings);
 
 private:
   rect baseRect;
   rect textPos;
   Fl_Group *group = nullptr;
-  std::string storedLabel;
 };
 
 class BtnBuilder : public IBuilder {
 public:
   BtnBuilder(const rect &groupRect);
   Fl_Group *getGroup() override;
-  Fl_Button *getBtn();
+  Fl_Button *setBtn(const layout &settings);
 
   void setBG(const std::optional<background> &bg) override;
-  void setBtn(const layout &settings);
 
 private:
   rect base;
   Fl_Group *group = nullptr;
-  Fl_Button *btn = nullptr;
 };
 
 class InputBuilder : public IBuilder {

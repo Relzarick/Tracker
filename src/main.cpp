@@ -1,6 +1,7 @@
 #include "builders.h"
 #include "data.h"
-#include "tests.cpp"
+#include "database.h"
+#include "helpers.h"
 #include "ui/director.h"
 
 #include <FL/Fl.H>
@@ -8,6 +9,15 @@
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Tooltip.H>
 #include <FL/Fl_Window.H>
+
+void addEntry(DB *db) {
+  usrInput data{"apple", 0.6, 6,
+                "Its an apple asdfasdf as asdjfhasld kfha sldjf hasldk "
+                "fjhasldkfjh asldkfjhasdl kfjhasdlkfjhasl dkfjkhasdlkf "
+                "jhasdlkfjkhasldkfjhasldkkjfhaslkdkjfhaslkdkfj h"};
+
+  db->insert(data);
+}
 
 int main(int argc, char **argv) {
   int width = 700;
@@ -28,15 +38,14 @@ int main(int argc, char **argv) {
   Fl_Tooltip::font(FL_COURIER);
   Fl_Tooltip::color(fl_rgb_color(242, 240, 239));
 
-  Director dir = Director(&pack);
+  DB db("DB test.db");
+  // addEntry(&db);
 
-  TextBuilder title(rect{.w = divWidth, .h = 250});
-  dir.constructEntry(title);
+  Director dir = Director(&pack, &db);
+  fetchFromDB(&db, &dir);
 
   BtnBuilder btn(rect{.w = divWidth, .h = 95});
   dir.constructAddBtn(btn);
-
-  // insertTest();
 
   pack.end();
   sc.end();

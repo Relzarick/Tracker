@@ -14,15 +14,16 @@ BtnBuilder::BtnBuilder(const rect &rect) {
   group->end();
 }
 
-void BtnBuilder::setBtn(const layout &settings) {
+Fl_Button *BtnBuilder::setBtn(const layout &settings) {
   Fl_Button *btn = new Fl_Button(base.x, base.y, base.w, base.h);
-  this->btn = btn;
 
   btn->box(FL_ROUNDED_BOX);
   btn->down_box(FL_ROUNDED_BOX);
 
   btn->color(FL_WHITE);
   btn->selection_color(fl_rgb_color(242, 240, 239));
+
+  return btn;
 }
 
 void BtnBuilder::setBG(const std::optional<background> &bg) {
@@ -31,4 +32,3 @@ void BtnBuilder::setBG(const std::optional<background> &bg) {
 };
 
 Fl_Group *BtnBuilder::getGroup() { return group; }
-Fl_Button *BtnBuilder::getBtn() { return btn; }

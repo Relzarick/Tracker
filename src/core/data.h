@@ -41,3 +41,27 @@ struct layout {
   Fl_Font font = FL_COURIER;
   rect pos;
 };
+
+struct usrInput {
+  const char *name;
+  double price;
+  int qty;
+  const char *description;
+};
+
+struct dbOutput {
+  int id;
+  int qty;
+  double price;
+  std::string name;
+  std::string description;
+};
+
+struct entryWidgetData {
+  int id;
+  Fl_Box *name;
+  Fl_Box *price;
+  Fl_Box *qty;
+  Fl_Box *desc;
+  Fl_Group *group;
+};

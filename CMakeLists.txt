@@ -15,13 +15,13 @@ endif()
 
 add_executable(TrackerProject
     src/main.cpp
+    src/helpers.cpp
     src/ui/text.cpp
     src/ui/button.cpp
     src/ui/input.cpp
-    src/db/testDB.cpp
     src/ui/director.cpp
     src/db/database.cpp
 )
 
-target_include_directories(TrackerProject PRIVATE src/ src/ui src/core)
+target_include_directories(TrackerProject PRIVATE src/ src/ui src/core src/db)
 target_link_libraries(TrackerProject PRIVATE fltk sqlite3)

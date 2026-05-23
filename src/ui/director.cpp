@@ -1,17 +1,23 @@
 #include "director.h"
 #include "builders.h"
 #include "data.h"
+#include "database.h"
 
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Pack.H>
 #include <FL/Fl_Window.H>
 
-Director::Director(Fl_Pack *pack) { this->pack = pack; }
+Director::Director(Fl_Pack *pack, DB *db) {
+  this->pack = pack;
+  this->db = db;
+}
 
-void Director::constructEntry(TextBuilder &builder) {
+void Director::constructEntry(TextBuilder &builder, dbOutput data) {
   builder.getGroup()->begin();
   builder.setBG(background{});
+
+  entryWidgetData widget{};
 
   layout header{.tooltip = "Entry name", .pos = {.x = 10, .y = 10}};
   layout price{.tooltip = "purchased price", .pos = {.x = 10, .y = 40}};
@@ -20,24 +26,50 @@ void Director::constructEntry(TextBuilder &builder) {
               .wrap = true,
               .pos = {.x = 10, .y = 100}};
 
-  builder.setText("Product name", header);
-  builder.setText("$424.20", price);
-  builder.setText("QTY: 290", qty);
+  std::string priceStr = std::format("${:.2f}", data.price);
+  std::string qtyStr = std::format("QTY: {}", data.qty);
 
-  builder.setText(
-      "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-      "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      desc);
+  widget.name = builder.setText(data.name.c_str(), header);
+  widget.price = builder.setText(priceStr.c_str(), price);
+  widget.qty = builder.setText(qtyStr.c_str(), qty);
+  widget.desc = builder.setText(data.description.c_str(), desc);
+  widget.group = builder.getGroup();
+
+  setEntryList(widget);
 
   builder.getGroup()->end();
   pack->add(builder.getGroup());
 };
 
+void Director::constructEntry(TextBuilder &builder) {
+  builder.getGroup()->begin();
+  builder.setBG(background{});
+
+  entryWidgetData widget{};
+
+  layout header{.tooltip = "Entry name", .pos = {.x = 10, .y = 10}};
+  layout price{.tooltip = "purchased price", .pos = {.x = 10, .y = 40}};
+  layout qty{.tooltip = "Quantity remaining", .pos = {.x = 180, .y = 10}};
+  layout desc{.tooltip = "Description of the entry",
+              .wrap = true,
+              .pos = {.x = 10, .y = 100}};
+
+  widget.name = builder.setText("", header);
+  widget.price = builder.setText("", price);
+  widget.qty = builder.setText("", qty);
+  widget.desc = builder.setText("", desc);
+  widget.group = builder.getGroup();
+
+  setEntryList(widget);
+
+  builder.getGroup()->end();
+  pack->add(builder.getGroup());
+}
+
 void Director::constructAddBtn(BtnBuilder &builder) {
   builder.getGroup()->begin();
-  builder.setBtn(layout{});
 
-  Fl_Button *btn = builder.getBtn();
+  Fl_Button *btn = builder.setBtn(layout{});
   addBtnData *data = new addBtnData{this, btn};
 
   btn->callback(
@@ -45,6 +77,7 @@ void Director::constructAddBtn(BtnBuilder &builder) {
         auto *d = static_cast<addBtnData *>(data);
 
         TextBuilder builder(rect{.w = 660, .h = 250});
+
         d->dir->constructEntry(builder);
         d->dir->pack->insert(*d->btn->parent(), d->dir->pack->children());
 
@@ -54,3 +87,13 @@ void Director::constructAddBtn(BtnBuilder &builder) {
 
   builder.getGroup()->end();
 }
+
+int Director::getEntryId() {
+  // this should return xx + 1
+
+  return 1;
+};
+
+void Director::setEntryList(entryWidgetData data) {
+  entryList.push_back(data);
+};

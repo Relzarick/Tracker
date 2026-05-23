@@ -3,6 +3,7 @@
 
 #include <FL/Enumerations.H>
 #include <FL/Fl.H>
+#include <FL/Fl_Box.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Widget.H>
 #include <FL/fl_draw.H>
@@ -16,13 +17,14 @@ TextBuilder::TextBuilder(const rect &rect) {
   group->end();
 }
 
-void TextBuilder::setText(const char *label, const layout &settings) {
+Fl_Box *TextBuilder::setText(const char *label, const layout &settings) {
   int tw = baseRect.w, th = baseRect.h;
   textPos = {.x = settings.pos.x, .y = settings.pos.y};
 
   fl_font(settings.font, settings.fontSize);
   fl_measure(label, tw, th);
-  Fl_Box *box = new Fl_Box(textPos.x, textPos.y, tw, th, label);
+  Fl_Box *box = new Fl_Box(textPos.x, textPos.y, tw, th);
+  box->copy_label(label);
 
   if (settings.wrap)
     box->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
@@ -30,6 +32,12 @@ void TextBuilder::setText(const char *label, const layout &settings) {
   box->labelfont(settings.font);
   box->labelsize(settings.fontSize);
   box->tooltip(settings.tooltip);
+  box->box(FL_BORDER_FRAME); // testing
+
+  // td if test is too short it will still wrap
+  // td enforce min width
+
+  return box;
 }
 
 void TextBuilder::setBG(const std::optional<background> &bg) {
