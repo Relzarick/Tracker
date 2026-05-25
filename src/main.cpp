@@ -19,14 +19,23 @@ void addEntry(DB *db) {
   db->insert(data);
 }
 
+void setup() {
+  Fl::visible_focus(0);
+
+  Fl_Tooltip::font(FL_COURIER);
+  Fl_Tooltip::color(fl_rgb_color(242, 240, 239));
+}
+
 int main(int argc, char **argv) {
   int width = 700;
   int height = 750;
   int x = 15;
   int divWidth = 660;
 
-  Fl_Window window(width, height, "Tracker");
+  Window window(width, height, "Tracker");
   Fl_Scroll sc(0, 0, width, height);
+
+  setup();
 
   sc.type(Fl_Scroll::VERTICAL);
   sc.scrollbar.color(sc.color());
@@ -34,23 +43,25 @@ int main(int argc, char **argv) {
   Fl_Pack pack(x, 0, divWidth, height);
   pack.spacing(16);
 
-  Fl::visible_focus(0);
-  Fl_Tooltip::font(FL_COURIER);
-  Fl_Tooltip::color(fl_rgb_color(242, 240, 239));
-
   DB db("DB test.db");
-  // addEntry(&db);
-
   Director dir = Director(&pack, &db);
-  fetchFromDB(&db, &dir);
+
+  // addEntry(&db);
+  // fetchFromDB(&db, &dir);
 
   BtnBuilder btn(rect{.w = divWidth, .h = 95});
   dir.constructAddBtn(btn);
+
+  createInput();
+
+  InputBuilder input(rect{.w = divWidth, .h = 250});
+  dir.constructInput(input);
 
   pack.end();
   sc.end();
   window.end();
   window.show(argc, argv);
+  Fl::focus(&window);
 
   return Fl::run();
 }

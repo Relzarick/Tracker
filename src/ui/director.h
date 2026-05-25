@@ -18,8 +18,10 @@ public:
   void constructEntry(TextBuilder &builder);
 
   void constructAddBtn(BtnBuilder &builder);
-  void setEntryList(entryWidgetData data);
 
+  void constructInput(InputBuilder &builder);
+
+  void setEntryList(entryWidgetData data);
   int getEntryId();
 
 private:

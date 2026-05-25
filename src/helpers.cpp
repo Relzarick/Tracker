@@ -4,6 +4,7 @@
 
 #include <FL/Fl.H>
 #include <FL/Fl_Input.H>
+#include <FL/Fl_Multiline_Input.H>
 
 #include <vector>
 
@@ -20,27 +21,13 @@ void fetchFromDB(DB *db, Director *dir) {
 }
 
 void createInput() {
-  rect size{500, 450, 100, 100};
-  TextBuilder *title = new TextBuilder(size);
-  background bg;
-  title->setBG(bg);
+  // Fl_Multiline_Input *multiInput = new Fl_Multiline_Input(100, 400, 500, 80);
 
-  Fl_Input *input = new Fl_Input(170, 350, 100, 40, "label");
-  input->when(FL_WHEN_ENTER_KEY);
+  // multiInput->callback([](Fl_Widget *w, void *data) {
+  //   auto *input = static_cast<Fl_Multiline_Input *>(w);
+  // });
 
-  static std::string stored; // dont want this
-
-  input->callback(
-      [](Fl_Widget *w, void *data) {
-        Fl_Input *input = (Fl_Input *)w;
-        TextBuilder *title = (TextBuilder *)data;
-
-        stored = input->value();
-
-        rect r{.w = 100, .h = 100};
-
-        // title->setText(r, stored.c_str());
-        title->getGroup()->redraw();
-      },
-      title);
+  // make background all invsis
+  // remove the cursor line when typing
+  // auto adjust acording to text? (set min width)
 }

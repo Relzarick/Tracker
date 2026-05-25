@@ -5,6 +5,7 @@
 
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
+#include <FL/Fl_Input.H>
 #include <FL/Fl_Pack.H>
 #include <FL/Fl_Window.H>
 
@@ -69,7 +70,7 @@ void Director::constructEntry(TextBuilder &builder) {
 void Director::constructAddBtn(BtnBuilder &builder) {
   builder.getGroup()->begin();
 
-  Fl_Button *btn = builder.setBtn(layout{});
+  Fl_Button *btn = builder.setBtn();
   addBtnData *data = new addBtnData{this, btn};
 
   btn->callback(
@@ -86,6 +87,27 @@ void Director::constructAddBtn(BtnBuilder &builder) {
       data);
 
   builder.getGroup()->end();
+}
+
+void Director::constructInput(InputBuilder &builder) {
+  builder.getGroup()->begin();
+  builder.setBG(background{});
+
+  layout settings = {.pos = {.x = 200, .y = 100, .w = 200, .h = 40}};
+  //. tbd the sizing
+  //* After clicking off this to also unfocus
+
+  Fl_Input *input = builder.setInput(settings);
+
+  Fl_Input *input1 =
+      builder.setInput({.pos = {.x = 200, .y = 200, .w = 200, .h = 40}});
+
+  input->callback([](Fl_Widget *w, void *data) {
+    auto *input = static_cast<Fl_Input *>(w);
+  });
+
+  builder.getGroup()->end();
+  pack->add(builder.getGroup());
 }
 
 int Director::getEntryId() {

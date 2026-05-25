@@ -14,7 +14,7 @@ BtnBuilder::BtnBuilder(const rect &rect) {
   group->end();
 }
 
-Fl_Button *BtnBuilder::setBtn(const layout &settings) {
+Fl_Button *BtnBuilder::setBtn() {
   Fl_Button *btn = new Fl_Button(base.x, base.y, base.w, base.h);
 
   btn->box(FL_ROUNDED_BOX);

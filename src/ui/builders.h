@@ -20,7 +20,7 @@ public:
   Fl_Box *setText(const char *label, const layout &settings);
 
 private:
-  rect baseRect;
+  rect base;
   rect textPos;
   Fl_Group *group = nullptr;
 };
@@ -29,7 +29,7 @@ class BtnBuilder : public IBuilder {
 public:
   BtnBuilder(const rect &groupRect);
   Fl_Group *getGroup() override;
-  Fl_Button *setBtn(const layout &settings);
+  Fl_Button *setBtn();
 
   void setBG(const std::optional<background> &bg) override;
 
@@ -40,14 +40,13 @@ private:
 
 class InputBuilder : public IBuilder {
 public:
-  InputBuilder(rect size);
+  InputBuilder(const rect &groupRect);
   Fl_Group *getGroup() override;
+  Fl_Input *setInput(const layout &settings);
 
   void setBG(const std::optional<background> &bg) override;
-  Fl_Input *getInput();
 
 private:
   rect base;
   Fl_Group *group = nullptr;
-  Fl_Input *input = nullptr;
 };
