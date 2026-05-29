@@ -13,13 +13,13 @@
 void addEntry(DB *db) {
   usrInput data{"apple", 0.6, 6,
                 "Its an apple asdfasdf as asdjfhasld kfha sldjf hasldk "
-                "fjhasldkfjh asldkfjhasdl kfjhasdlkfjhasl dkfjkhasdlkf "
-                "jhasdlkfjkhasldkfjhasldkkjfhaslkdkjfhaslkdkfj h"};
+                "fjhasldkfjh asldkfjhasdl kfjhasdlkfjhasl dkfjkhasdlkf "};
 
   db->insert(data);
 }
 
-void setup() {
+void appS(Window *win) {
+  Fl::focus(win);
   Fl::visible_focus(0);
 
   Fl_Tooltip::font(FL_COURIER);
@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
   Window window(width, height, "Tracker");
   Fl_Scroll sc(0, 0, width, height);
 
-  setup();
+  appS(&window);
 
   sc.type(Fl_Scroll::VERTICAL);
   sc.scrollbar.color(sc.color());
@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
   Director dir = Director(&pack, &db);
 
   // addEntry(&db);
-  // fetchFromDB(&db, &dir);
+  fetchFromDB(&db, &dir);
 
   BtnBuilder btn(rect{.w = divWidth, .h = 95});
   dir.constructAddBtn(btn);
@@ -61,7 +61,6 @@ int main(int argc, char **argv) {
   sc.end();
   window.end();
   window.show(argc, argv);
-  Fl::focus(&window);
 
   return Fl::run();
 }

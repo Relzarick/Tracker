@@ -10,9 +10,9 @@ public:
   DB(const char *name);
   ~DB();
 
-  void insert(const usrInput &data);
+  void insert(const usrInput &input);
+  void update(int id, const usrInput &input);
 
-  dbOutput edit(int id);
   dbOutput fetch(int id);
   std::vector<dbOutput> fetchAll();
 

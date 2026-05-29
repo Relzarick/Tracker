@@ -20,7 +20,7 @@ void InputBuilder::setBG(const std::optional<background> &bg) {
 }
 
 Fl_Input *InputBuilder::setInput(const layout &layout) {
-  InputField *input =
+  auto input =
       new InputField(layout.pos.x, layout.pos.y, layout.pos.w, layout.pos.h);
 
   input->labelsize(layout.fontSize);

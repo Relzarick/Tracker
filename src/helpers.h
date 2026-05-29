@@ -5,6 +5,7 @@
 
 #include <FL/Enumerations.H>
 #include <FL/Fl_Input_.H>
+#include <FL/Fl_Widget.H>
 #include <FL/Fl_Window.H>
 
 void fetchFromDB(DB *db, Director *dir);
@@ -20,21 +21,30 @@ public:
   int handle(int event) override {
     switch (event) {
     case FL_FOCUS: // show cursor
-      box(FL_BORDER_BOX);
-      cursor_color(FL_BLACK);
-      redraw();
+      renderInput(FL_BORDER_BOX, FL_BLACK);
 
       return Fl_Input::handle(event);
 
     case FL_UNFOCUS: // hide cursor
-      box(FL_FLAT_BOX);
-      cursor_color(FL_WHITE);
-      redraw();
+      renderInput(FL_FLAT_BOX, FL_WHITE);
+
+      return Fl_Input::handle(event);
+
+    case FL_KEYBOARD: // prevent input auto focus
+      if (Fl::event_key() == FL_Enter)
+        Fl::focus(Fl_Widget::window());
 
       return Fl_Input::handle(event);
     }
 
     return Fl_Input::handle(event);
+  }
+
+private:
+  void renderInput(Fl_Boxtype boxType, Fl_Color cursorColor) {
+    box(boxType);
+    cursor_color(cursorColor);
+    redraw();
   }
 };
 

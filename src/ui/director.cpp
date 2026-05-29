@@ -71,20 +71,20 @@ void Director::constructAddBtn(BtnBuilder &builder) {
   builder.getGroup()->begin();
 
   Fl_Button *btn = builder.setBtn();
-  addBtnData *data = new addBtnData{this, btn};
+  addBtnData *btnData = new addBtnData{this, btn};
 
   btn->callback(
       [](Fl_Widget *w, void *data) {
-        auto *d = static_cast<addBtnData *>(data);
+        auto *bd = static_cast<addBtnData *>(data);
 
         TextBuilder builder(rect{.w = 660, .h = 250});
 
-        d->dir->constructEntry(builder);
-        d->dir->pack->insert(*d->btn->parent(), d->dir->pack->children());
+        bd->dir->constructEntry(builder);
+        bd->dir->pack->insert(*bd->btn->parent(), bd->dir->pack->children());
 
         w->window()->redraw();
       },
-      data);
+      btnData);
 
   builder.getGroup()->end();
 }
@@ -94,17 +94,30 @@ void Director::constructInput(InputBuilder &builder) {
   builder.setBG(background{});
 
   layout settings = {.pos = {.x = 200, .y = 100, .w = 200, .h = 40}};
-  //. tbd the sizing
-  //* After clicking off this to also unfocus
+  layout settings2 = {.pos = {.x = 200, .y = 200, .w = 200, .h = 40}};
 
   Fl_Input *input = builder.setInput(settings);
+  Fl_Input *input1 = builder.setInput(settings2);
 
-  Fl_Input *input1 =
-      builder.setInput({.pos = {.x = 200, .y = 200, .w = 200, .h = 40}});
+  input->callback(
+      [](Fl_Widget *w, void *data) {
+        auto input = static_cast<Fl_Input *>(w);
+        auto dir = static_cast<Director *>(data);
 
-  input->callback([](Fl_Widget *w, void *data) {
-    auto *input = static_cast<Fl_Input *>(w);
-  });
+        usrInput test{"pear", 1.2, 336, "Its an pear"};
+
+        dir->db->update(dir->getEntryId(), test);
+
+        // now have to refresh list
+        // update the entry list
+
+        //. make a render all
+        //. update list entry to take optional index
+        //. construct input needs to know index of the input
+        // * placeholder first
+        //. tbd the sizing
+      },
+      this);
 
   builder.getGroup()->end();
   pack->add(builder.getGroup());
