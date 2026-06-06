@@ -1,5 +1,4 @@
 #include "builders.h"
-#include "data.h"
 
 #include <FL/Enumerations.H>
 #include <FL/Fl.H>
@@ -19,21 +18,17 @@ TextBuilder::TextBuilder(const rect &rect) {
 
 Fl_Box *TextBuilder::setText(const char *label, const layout &layout) {
   int tw = base.w, th = base.h;
-  textPos = {.x = layout.pos.x, .y = layout.pos.y};
+  textPos = {layout.pos.x, layout.pos.y};
 
-  fl_font(FL_COURIER, layout.fontSize);
+  fl_font(FL_HELVETICA, layout.fontSize);
   fl_measure(label, tw, th);
   Fl_Box *box = new Fl_Box(textPos.x, textPos.y, tw, th);
   box->copy_label(label);
-
-  if (layout.wrap)
-    box->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE | FL_ALIGN_WRAP);
 
   box->labelsize(layout.fontSize);
   box->tooltip(layout.tooltip);
   box->box(FL_BORDER_FRAME); // testing
 
-  // td if test is too short it will still wrap
   // td enforce min width
 
   return box;

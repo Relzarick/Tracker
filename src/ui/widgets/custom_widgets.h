@@ -1,15 +1,10 @@
 #pragma once
 
-#include "database.h"
-#include "director.h"
-
 #include <FL/Enumerations.H>
-#include <FL/Fl_Input_.H>
+#include <FL/Fl.H>
+#include <FL/Fl_Input.H>
 #include <FL/Fl_Widget.H>
 #include <FL/Fl_Window.H>
-
-void fetchFromDB(DB *db, Director *dir);
-void createInput();
 
 class InputField : public Fl_Input {
 public:

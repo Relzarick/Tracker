@@ -1,6 +1,6 @@
-#include "helpers.h"
-#include "builders.h"
 #include "data.h"
+#include "database.h"
+#include "director.h"
 
 #include <FL/Fl.H>
 #include <FL/Fl_Input.H>
@@ -14,10 +14,8 @@ void fetchFromDB(DB *db, Director *dir) {
   if (dbList.size() == 0)
     return;
 
-  for (const auto &entry : dbList) {
-    TextBuilder builder(rect{.w = 660, .h = 250});
-    dir->constructEntry(builder, entry);
-  }
+  for (const auto &entry : dbList)
+    dir->constructEntry(entry);
 }
 
 void createInput() {
@@ -26,8 +24,4 @@ void createInput() {
   // multiInput->callback([](Fl_Widget *w, void *data) {
   //   auto *input = static_cast<Fl_Multiline_Input *>(w);
   // });
-
-  // make background all invsis
-  // remove the cursor line when typing
-  // auto adjust acording to text? (set min width)
 }

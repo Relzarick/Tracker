@@ -1,6 +1,7 @@
 #include "builders.h"
-#include "data.h"
-#include "helpers.h"
+
+#include "widgets/custom_widgets.h"
+#include "widgets/ui_types.h"
 
 #include <FL/Enumerations.H>
 #include <FL/Fl.H>
@@ -23,7 +24,7 @@ Fl_Input *InputBuilder::setInput(const layout &layout) {
   auto input =
       new InputField(layout.pos.x, layout.pos.y, layout.pos.w, layout.pos.h);
 
-  input->labelsize(layout.fontSize);
+  input->textsize(layout.fontSize);
   input->tooltip(layout.tooltip);
 
   return input;

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "data.h"
 #include "iBuilder.h"
+#include "widgets/ui_types.h"
 
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>

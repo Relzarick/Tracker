@@ -1,9 +1,12 @@
-#include "builders.h"
 #include "data.h"
 #include "database.h"
-#include "helpers.h"
-#include "ui/director.h"
+#include "director.h"
+#include "startup.h"
 
+#include "widgets/custom_widgets.h"
+#include "widgets/styles.h"
+
+#include <FL/Enumerations.H>
 #include <FL/Fl.H>
 #include <FL/Fl_Pack.H>
 #include <FL/Fl_Scroll.H>
@@ -12,17 +15,15 @@
 
 void addEntry(DB *db) {
   usrInput data{"apple", 0.6, 6,
-                "Its an apple asdfasdf as asdjfhasld kfha sldjf hasldk "
-                "fjhasldkfjh asldkfjhasdl kfjhasdlkfjhasl dkfjkhasdlkf "};
+                "Its an apple asdfasdf as asdjfhasld kfha sldjf hasldk "};
 
   db->insert(data);
 }
 
-void appS(Window *win) {
+void appSetting(Window *win) {
   Fl::focus(win);
   Fl::visible_focus(0);
 
-  Fl_Tooltip::font(FL_COURIER);
   Fl_Tooltip::color(fl_rgb_color(242, 240, 239));
 }
 
@@ -30,12 +31,11 @@ int main(int argc, char **argv) {
   int width = 700;
   int height = 750;
   int x = 15;
-  int divWidth = 660;
 
   Window window(width, height, "Tracker");
   Fl_Scroll sc(0, 0, width, height);
 
-  appS(&window);
+  appSetting(&window);
 
   sc.type(Fl_Scroll::VERTICAL);
   sc.scrollbar.color(sc.color());
@@ -49,13 +49,8 @@ int main(int argc, char **argv) {
   // addEntry(&db);
   fetchFromDB(&db, &dir);
 
-  BtnBuilder btn(rect{.w = divWidth, .h = 95});
-  dir.constructAddBtn(btn);
-
-  createInput();
-
-  InputBuilder input(rect{.w = divWidth, .h = 250});
-  dir.constructInput(input);
+  dir.constructAddBtn();
+  // dir.constructInput();
 
   pack.end();
   sc.end();

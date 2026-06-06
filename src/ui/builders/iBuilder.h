@@ -1,11 +1,11 @@
 #pragma once
 
-#include "data.h"
+#include "widgets/ui_types.h"
+
+#include <optional>
 
 #include <FL/Fl.H>
 #include <FL/Fl_Group.H>
-
-#include <optional>
 
 class IBuilder {
 public:

@@ -1,8 +1,7 @@
 #pragma once
 
-#include "builders.h"
-#include "data.h"
 #include "database.h"
+#include "widgets/ui_types.h"
 
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Group.H>
@@ -14,12 +13,10 @@ class Director {
 public:
   Director(Fl_Pack *pack, DB *db);
 
-  void constructEntry(TextBuilder &builder, dbOutput data);
-  void constructEntry(TextBuilder &builder);
-
-  void constructAddBtn(BtnBuilder &builder);
-
-  void constructInput(InputBuilder &builder);
+  void constructEntry(dbOutput data);
+  void constructEntry();
+  void constructAddBtn();
+  void constructInput();
 
   void setEntryList(entryWidgetData data);
   int getEntryId();
