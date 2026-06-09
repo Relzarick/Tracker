@@ -1,31 +1,26 @@
 #pragma once
 
-#include "database.h"
-#include "widgets/ui_types.h"
+#include "input_mediator.h"
 
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Pack.H>
 #include <Fl/Fl_Button.H>
-#include <vector>
 
 class Director {
 public:
-  Director(Fl_Pack *pack, DB *db);
+  Director(Fl_Pack *pack, InputMediator *med);
 
   void constructEntry(dbOutput data);
   void constructEntry();
   void constructAddBtn();
   void constructInput();
 
-  void setEntryList(entryWidgetData data);
-  int getEntryId();
-
 private:
   Fl_Pack *pack = nullptr;
-  DB *db = nullptr;
+  InputMediator *med = nullptr;
 
-  std::vector<entryWidgetData> entryList;
+  void handleInputCB(entryWidgetData widget);
 };
 
 struct addBtnData {

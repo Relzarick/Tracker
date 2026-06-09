@@ -1,6 +1,6 @@
 #include "director.h"
 #include "builders.h"
-#include "database.h"
+#include "input_mediator.h"
 #include "styles.h"
 #include "ui_types.h"
 
@@ -14,9 +14,9 @@
 #include <FL/Fl_Widget.H>
 #include <FL/Fl_Window.H>
 
-Director::Director(Fl_Pack *pack, DB *db) {
+Director::Director(Fl_Pack *pack, InputMediator *med) {
   this->pack = pack;
-  this->db = db;
+  this->med = med;
 }
 
 void Director::constructEntry(dbOutput data) {
@@ -31,22 +31,9 @@ void Director::constructEntry(dbOutput data) {
   std::string priceStr = std::format("{:.2f}", data.price);
   std::string qtyStr = std::format("{}", data.qty);
 
-  layout header{.tooltip = "Entry name", .pos = {20, 10, 170, textHeight}};
-
-  layout desc{.tooltip = "Description of the entry",
-              .pos = {20, 100, 600, textHeight}};
-
-  layout priceSymbol{.pos = {20, 66, 80, textHeight}};
-  layout price{.tooltip = "purchased price", .pos = {40, 60, 100, textHeight}};
-
-  layout qtySymbol{.pos = {200, 16, 100, textHeight}};
-  layout qty{.tooltip = "Quantity remaining", .pos = {255, 10, 80, textHeight}};
-
-  // td make these inline ^
-
   entryWidgetData widget{};
 
-  widget.id = entryList.size(); // assigns id by size need review
+  widget.id = data.id;
   textBuilder.setText("$ ", priceSymbol);
   textBuilder.setText("QTY: ", qtySymbol);
 
@@ -64,52 +51,52 @@ void Director::constructEntry(dbOutput data) {
 
   widget.group = textBuilder.getGroup();
 
-  setEntryList(widget);
+  med->setEntryToList(widget);
 
   textBuilder.getGroup()->end();
   pack->add(textBuilder.getGroup());
 
-  widget.name->callback(
-      [](Fl_Widget *w, void *data) {
-        auto input = static_cast<Fl_Input *>(w);
-        auto dir = static_cast<Director *>(data);
-
-        usrInput test{input->value(), 1.2, 333, "Its a pear"};
-
-        dir->db->update(dir->getEntryId(), test);
-
-        //. New class observer monster
-        // It will own the entrylist
-        // then it will sub to all input events? (somehow)
-        // each entry update will ping the observer monster
-        // observer monster would then know about its id (somehow)
-        // can just use .value and build the usrInput struct for DB
-      },
-      this);
+  handleInputCB(widget);
 };
 
 void Director::constructEntry() {
-  TextBuilder builder(rect{.w = divWidth, .h = divHeight});
-  builder.getGroup()->begin();
-  builder.setBG(background{});
+  rect rect{.w = divWidth, .h = divHeight};
 
-  layout header{.tooltip = "Entry name", .pos = {.x = 10, .y = 10}};
-  layout price{.tooltip = "purchased price", .pos = {.x = 10, .y = 40}};
-  layout qty{.tooltip = "Quantity remaining", .pos = {.x = 180, .y = 10}};
-  layout desc{.tooltip = "Description of the entry",
-              .pos = {.x = 10, .y = 100}};
+  TextBuilder textBuilder(rect);
+  textBuilder.getGroup()->begin();
+  textBuilder.setBG(background{});
 
-  // widget.name = builder.setText("", header);
-  // widget.price = builder.setText("", price);
-  // widget.qty = builder.setText("", qty);
-  // widget.desc = builder.setText("", desc);
+  InputBuilder inputBuilder(rect);
+
+  std::string priceStr = std::format("{:.2f}", 0.0);
+  std::string qtyStr = std::format("{}", 0);
+
   entryWidgetData widget{};
 
-  widget.group = builder.getGroup();
-  setEntryList(widget);
+  widget.id = med->insertBlankEntry();
+  textBuilder.setText("$ ", priceSymbol);
+  textBuilder.setText("QTY: ", qtySymbol);
 
-  builder.getGroup()->end();
-  pack->add(builder.getGroup());
+  widget.name = inputBuilder.setInput(header);
+  widget.name->value("");
+
+  widget.price = inputBuilder.setInput(price);
+  widget.price->value(priceStr.c_str());
+
+  widget.qty = inputBuilder.setInput(qty);
+  widget.qty->value(qtyStr.c_str());
+
+  widget.desc = inputBuilder.setInput(desc);
+  widget.desc->value("");
+
+  widget.group = textBuilder.getGroup();
+
+  med->setEntryToList(widget);
+
+  textBuilder.getGroup()->end();
+  pack->add(textBuilder.getGroup());
+
+  handleInputCB(widget);
 }
 
 void Director::constructAddBtn() {
@@ -123,13 +110,8 @@ void Director::constructAddBtn() {
       [](Fl_Widget *w, void *data) {
         auto *bd = static_cast<addBtnData *>(data);
 
-        // bd->dir->constructEntry();
-        // bd->dir->pack->insert(*bd->btn->parent(), bd->dir->pack->children());
-
-        for (const auto &entry : bd->dir->entryList) {
-          printf("%d: %s\n", entry.id, entry.name->value());
-          printf("Description: %s\n\n", entry.desc->value());
-        }
+        bd->dir->constructEntry();
+        bd->dir->pack->insert(*bd->btn->parent(), bd->dir->pack->children());
 
         w->window()->redraw();
       },
@@ -138,6 +120,7 @@ void Director::constructAddBtn() {
   builder.getGroup()->end();
 }
 
+// td tbd what to do
 void Director::constructInput() {
   InputBuilder builder(rect{.w = divWidth, .h = divHeight});
   builder.getGroup()->begin();
@@ -149,32 +132,24 @@ void Director::constructInput() {
   input->callback(
       [](Fl_Widget *w, void *data) {
         auto input = static_cast<Fl_Input *>(w);
-        auto dir = static_cast<Director *>(data);
+        auto med = static_cast<InputMediator *>(data);
 
-        usrInput test{"pear", 1.2, 333, "Its a pear"};
-        // * get user input
-
-        dir->db->update(dir->getEntryId(), test);
-
-        // now have to refresh list
-        // update the entry list
-
-        //. make a render all
-        //. update list entry to take optional index
-        //. construct input needs to know index of the input
+        med->updateDBField(input);
       },
-      this);
+      med);
 
   builder.getGroup()->end();
   pack->add(builder.getGroup());
 }
 
-int Director::getEntryId() {
-  // revisit after refactor
+void Director::handleInputCB(entryWidgetData widget) {
+  auto handler = [](Fl_Widget *w, void *data) {
+    static_cast<InputMediator *>(data)->updateDBField(
+        static_cast<Fl_Input *>(w));
+  };
 
-  return 1;
-};
-
-void Director::setEntryList(entryWidgetData data) {
-  entryList.push_back(data);
-};
+  widget.name->callback(handler, med);
+  widget.price->callback(handler, med);
+  widget.qty->callback(handler, med);
+  widget.desc->callback(handler, med);
+}

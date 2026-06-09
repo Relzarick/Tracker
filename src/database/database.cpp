@@ -26,7 +26,7 @@ DB::DB(const char *name) {
 
 DB::~DB() { sqlite3_close(db); }
 
-void DB::insert(const usrInput &input) {
+int DB::insert(const usrInput &input) {
   sqlite3_stmt *stmt;
 
   sqlite3_prepare_v2(
@@ -42,7 +42,10 @@ void DB::insert(const usrInput &input) {
   if (sqlite3_step(stmt) != SQLITE_DONE)
     std::println("SQL INSERT ERROR: {}", sqlite3_errmsg(db));
 
+  int rowId = sqlite3_last_insert_rowid(db);
+
   sqlite3_finalize(stmt);
+  return rowId;
 }
 
 void DB::update(int id, const usrInput &input) {
@@ -80,7 +83,7 @@ dbOutput DB::fetch(int id) {
   sqlite3_bind_int(stmt, 1, id);
 
   if (sqlite3_step(stmt) == SQLITE_ROW) {
-    int rowId = sqlite3_column_int(stmt, 0); // might be useful
+    result.id = sqlite3_column_int(stmt, 0);
     result.name = (const char *)sqlite3_column_text(stmt, 1);
     result.price = sqlite3_column_double(stmt, 2);
     result.qty = sqlite3_column_int(stmt, 3);

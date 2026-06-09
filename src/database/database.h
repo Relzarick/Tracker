@@ -10,7 +10,7 @@ public:
   DB(const char *name);
   ~DB();
 
-  void insert(const usrInput &input);
+  int insert(const usrInput &input);
   void update(int id, const usrInput &input);
 
   dbOutput fetch(int id);

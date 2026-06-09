@@ -3,6 +3,7 @@
 #include "director.h"
 #include "startup.h"
 
+#include "ui/input_mediator.h"
 #include "widgets/custom_widgets.h"
 #include "widgets/styles.h"
 
@@ -44,7 +45,8 @@ int main(int argc, char **argv) {
   pack.spacing(16);
 
   DB db("DB test.db");
-  Director dir = Director(&pack, &db);
+  InputMediator med(&db);
+  Director dir = Director(&pack, &med);
 
   // addEntry(&db);
   fetchFromDB(&db, &dir);
