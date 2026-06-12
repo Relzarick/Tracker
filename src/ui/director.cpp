@@ -46,7 +46,7 @@ void Director::constructEntry(dbOutput data) {
   widget.qty = inputBuilder.setInput(qty);
   widget.qty->value(qtyStr.c_str());
 
-  widget.desc = inputBuilder.setInput(desc);
+  widget.desc = inputBuilder.SetMultilineInput(desc);
   widget.desc->value(data.description.c_str());
 
   widget.group = textBuilder.getGroup();
@@ -78,7 +78,7 @@ void Director::constructEntry() {
   textBuilder.setText("QTY: ", qtySymbol);
 
   widget.name = inputBuilder.setInput(header);
-  widget.name->value("");
+  widget.name->value("Enter a name");
 
   widget.price = inputBuilder.setInput(price);
   widget.price->value(priceStr.c_str());
@@ -86,8 +86,8 @@ void Director::constructEntry() {
   widget.qty = inputBuilder.setInput(qty);
   widget.qty->value(qtyStr.c_str());
 
-  widget.desc = inputBuilder.setInput(desc);
-  widget.desc->value("");
+  widget.desc = inputBuilder.SetMultilineInput(desc);
+  widget.desc->value("Enter your description");
 
   widget.group = textBuilder.getGroup();
 

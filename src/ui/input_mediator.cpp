@@ -16,6 +16,8 @@ void InputMediator::updateDBField(Fl_Input *field) {
   usrInput input{entry.name->value(), std::stod(entry.price->value()),
                  std::stoi(entry.qty->value()), entry.desc->value()};
 
+  // td need to clean the input
+
   getDB()->update(entry.id, input);
 }
 

@@ -17,11 +17,3 @@ void fetchFromDB(DB *db, Director *dir) {
   for (const auto &entry : dbList)
     dir->constructEntry(entry);
 }
-
-void createInput() {
-  // Fl_Multiline_Input *multiInput = new Fl_Multiline_Input(100, 400, 500, 80);
-
-  // multiInput->callback([](Fl_Widget *w, void *data) {
-  //   auto *input = static_cast<Fl_Multiline_Input *>(w);
-  // });
-}

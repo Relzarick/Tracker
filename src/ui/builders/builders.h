@@ -43,6 +43,7 @@ public:
   InputBuilder(const rect &groupRect);
   Fl_Group *getGroup() override;
   Fl_Input *setInput(const layout &settings);
+  Fl_Input *SetMultilineInput(const layout &settings);
 
   void setBG(const std::optional<background> &bg) override;
 

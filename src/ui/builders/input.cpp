@@ -1,7 +1,7 @@
 #include "builders.h"
 
-#include "widgets/custom_widgets.h"
-#include "widgets/ui_types.h"
+#include "custom_widgets.h"
+#include "ui_types.h"
 
 #include <FL/Enumerations.H>
 #include <FL/Fl.H>
@@ -28,6 +28,16 @@ Fl_Input *InputBuilder::setInput(const layout &layout) {
   input->tooltip(layout.tooltip);
 
   return input;
+}
+
+Fl_Input *InputBuilder::SetMultilineInput(const layout &layout) {
+  auto multiInput =
+      new BigInputField(layout.pos.x, layout.pos.y, layout.pos.w, layout.pos.h);
+
+  multiInput->textsize(layout.fontSize);
+  multiInput->tooltip(layout.tooltip);
+
+  return multiInput;
 }
 
 Fl_Group *InputBuilder::getGroup() { return group; }

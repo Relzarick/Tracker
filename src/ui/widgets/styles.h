@@ -22,4 +22,4 @@ inline constexpr layout qty{.tooltip = "Quantity remaining",
                             .pos = {255, 10, 80, textHeight}};
 
 inline constexpr layout desc{.tooltip = "Description of the entry",
-                             .pos = {20, 100, 600, textHeight}};
+                             .pos = {20, 100, 600, 140}};
