@@ -26,7 +26,7 @@ DB::DB(const char *name) {
 
 DB::~DB() { sqlite3_close(db); }
 
-void DB::insert(const usrInput &data) {
+int DB::insert(const usrInput &input) {
   sqlite3_stmt *stmt;
 
   sqlite3_prepare_v2(
@@ -34,35 +34,56 @@ void DB::insert(const usrInput &data) {
       "INSERT INTO entry (name, price, qty, description) VALUES (?, ?, ?, ?)",
       -1, &stmt, nullptr);
 
-  sqlite3_bind_text(stmt, 1, data.name, -1, SQLITE_TRANSIENT);
-  sqlite3_bind_double(stmt, 2, data.price);
-  sqlite3_bind_int(stmt, 3, data.qty);
-  sqlite3_bind_text(stmt, 4, data.description, -1, SQLITE_TRANSIENT);
+  sqlite3_bind_text(stmt, 1, input.name, -1, SQLITE_TRANSIENT);
+  sqlite3_bind_double(stmt, 2, input.price);
+  sqlite3_bind_int(stmt, 3, input.qty);
+  sqlite3_bind_text(stmt, 4, input.description, -1, SQLITE_TRANSIENT);
 
   if (sqlite3_step(stmt) != SQLITE_DONE)
     std::println("SQL INSERT ERROR: {}", sqlite3_errmsg(db));
 
+  int rowId = sqlite3_last_insert_rowid(db);
+
+  sqlite3_finalize(stmt);
+  return rowId;
+}
+
+void DB::update(int id, const usrInput &input) {
+  assert(id > 0);
+
+  sqlite3_stmt *stmt;
+
+  sqlite3_prepare_v2(db,
+                     "UPDATE entry SET "
+                     "name = ?, price = ?, qty = ?, description = ? "
+                     "WHERE id = ?",
+                     -1, &stmt, nullptr);
+
+  sqlite3_bind_text(stmt, 1, input.name, -1, SQLITE_TRANSIENT);
+  sqlite3_bind_double(stmt, 2, input.price);
+  sqlite3_bind_int(stmt, 3, input.qty);
+  sqlite3_bind_text(stmt, 4, input.description, -1, SQLITE_TRANSIENT);
+  sqlite3_bind_int(stmt, 5, id);
+
+  if (sqlite3_step(stmt) != SQLITE_DONE)
+    std::println("SQL UPDATE ERROR: {}", sqlite3_errmsg(db));
+
   sqlite3_finalize(stmt);
 }
 
-dbOutput DB::edit(int id) {
-  dbOutput db{};
-
-  return db;
-}
-
 dbOutput DB::fetch(int id) {
+  assert(id > 0);
+
   sqlite3_stmt *stmt;
   dbOutput result{};
 
   sqlite3_prepare_v2(db, "SELECT * FROM entry WHERE id = ?", -1, &stmt,
                      nullptr);
 
-  assert(id > 0);
   sqlite3_bind_int(stmt, 1, id);
 
   if (sqlite3_step(stmt) == SQLITE_ROW) {
-    int rowId = sqlite3_column_int(stmt, 0); // might be useful
+    result.id = sqlite3_column_int(stmt, 0);
     result.name = (const char *)sqlite3_column_text(stmt, 1);
     result.price = sqlite3_column_double(stmt, 2);
     result.qty = sqlite3_column_int(stmt, 3);

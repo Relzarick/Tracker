@@ -1,9 +1,13 @@
-#include "builders.h"
 #include "data.h"
 #include "database.h"
-#include "helpers.h"
-#include "ui/director.h"
+#include "director.h"
+#include "startup.h"
 
+#include "ui/input_mediator.h"
+#include "widgets/custom_widgets.h"
+#include "widgets/styles.h"
+
+#include <FL/Enumerations.H>
 #include <FL/Fl.H>
 #include <FL/Fl_Pack.H>
 #include <FL/Fl_Scroll.H>
@@ -12,21 +16,27 @@
 
 void addEntry(DB *db) {
   usrInput data{"apple", 0.6, 6,
-                "Its an apple asdfasdf as asdjfhasld kfha sldjf hasldk "
-                "fjhasldkfjh asldkfjhasdl kfjhasdlkfjhasl dkfjkhasdlkf "
-                "jhasdlkfjkhasldkfjhasldkkjfhaslkdkjfhaslkdkfj h"};
+                "Its an apple asdfasdf as asdjfhasld kfha sldjf hasldk "};
 
   db->insert(data);
+}
+
+void appSetting(Window *win) {
+  Fl::focus(win);
+  Fl::visible_focus(0);
+
+  Fl_Tooltip::color(fl_rgb_color(242, 240, 239));
 }
 
 int main(int argc, char **argv) {
   int width = 700;
   int height = 750;
   int x = 15;
-  int divWidth = 660;
 
-  Fl_Window window(width, height, "Tracker");
+  Window window(width, height, "Tracker");
   Fl_Scroll sc(0, 0, width, height);
+
+  appSetting(&window);
 
   sc.type(Fl_Scroll::VERTICAL);
   sc.scrollbar.color(sc.color());
@@ -34,18 +44,15 @@ int main(int argc, char **argv) {
   Fl_Pack pack(x, 0, divWidth, height);
   pack.spacing(16);
 
-  Fl::visible_focus(0);
-  Fl_Tooltip::font(FL_COURIER);
-  Fl_Tooltip::color(fl_rgb_color(242, 240, 239));
-
   DB db("DB test.db");
-  // addEntry(&db);
+  InputMediator med(&db);
+  Director dir = Director(&pack, &med);
 
-  Director dir = Director(&pack, &db);
+  // addEntry(&db);
   fetchFromDB(&db, &dir);
 
-  BtnBuilder btn(rect{.w = divWidth, .h = 95});
-  dir.constructAddBtn(btn);
+  dir.constructAddBtn();
+  // dir.constructInput();
 
   pack.end();
   sc.end();
