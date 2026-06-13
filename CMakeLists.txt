@@ -33,4 +33,4 @@ target_include_directories(TrackerProject PRIVATE
     src/ui/widgets
 )
 
-target_link_libraries(TrackerProject PRIVATE fltk sqlite3)
+target_link_libraries(TrackerProject PRIVATE fltk fltk_images sqlite3)

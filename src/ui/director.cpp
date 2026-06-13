@@ -6,12 +6,7 @@
 
 #include <format>
 
-#include <FL/Enumerations.H>
-#include <FL/Fl_Button.H>
-#include <FL/Fl_Group.H>
-#include <FL/Fl_Input.H>
-#include <FL/Fl_Pack.H>
-#include <FL/Fl_Widget.H>
+#include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_Window.H>
 
 Director::Director(Fl_Pack *pack, InputMediator *med) {
@@ -50,6 +45,8 @@ void Director::constructEntry(dbOutput data) {
   widget.desc->value(data.description.c_str());
 
   widget.group = textBuilder.getGroup();
+
+  constructDeleteBtn();
 
   med->setEntryToList(widget);
 
@@ -91,6 +88,8 @@ void Director::constructEntry() {
 
   widget.group = textBuilder.getGroup();
 
+  constructDeleteBtn();
+
   med->setEntryToList(widget);
 
   textBuilder.getGroup()->end();
@@ -104,18 +103,45 @@ void Director::constructAddBtn() {
   builder.getGroup()->begin();
 
   Fl_Button *btn = builder.setBtn();
-  addBtnData *btnData = new addBtnData{this, btn};
 
   btn->callback(
       [](Fl_Widget *w, void *data) {
-        auto *bd = static_cast<addBtnData *>(data);
+        auto *dir = static_cast<Director *>(data);
 
-        bd->dir->constructEntry();
-        bd->dir->pack->insert(*bd->btn->parent(), bd->dir->pack->children());
+        dir->constructEntry();
+        dir->pack->insert(*w->parent(), dir->pack->children());
 
         w->window()->redraw();
       },
-      btnData);
+      this);
+
+  builder.getGroup()->end();
+}
+
+void Director::constructDeleteBtn() {
+  rect rect{.x = 600, .y = 15, .w = 30, .h = 40};
+  background bg{.box_type = FL_NO_BOX};
+
+  BtnBuilder builder(rect);
+  builder.getGroup()->begin();
+
+  Fl_Button *btn = builder.setBtn();
+  Fl_PNG_Image *icon = new Fl_PNG_Image("assets/delete.png");
+
+  btn->image(icon);
+  btn->box(bg.box_type);
+  btn->down_box(bg.box_type);
+  btn->down_color(bg.bg_color);
+
+  btn->callback(
+      [](Fl_Widget *w, void *data) {
+        auto *dir = static_cast<Director *>(data);
+
+        //. make delete entry
+
+        w->window()->redraw();
+      },
+      this);
 
   builder.getGroup()->end();
 }

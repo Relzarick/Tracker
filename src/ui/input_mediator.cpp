@@ -3,10 +3,6 @@
 #include "database.h"
 #include "ui_types.h"
 
-#include <string>
-
-#include <FL/Fl_Input.H>
-
 InputMediator::InputMediator(DB *db) { this->db = db; }
 
 void InputMediator::updateDBField(Fl_Input *field) {

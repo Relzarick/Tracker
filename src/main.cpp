@@ -52,6 +52,7 @@ int main(int argc, char **argv) {
   fetchFromDB(&db, &dir);
 
   dir.constructAddBtn();
+
   // dir.constructInput();
 
   pack.end();

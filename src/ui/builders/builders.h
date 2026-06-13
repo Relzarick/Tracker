@@ -3,21 +3,17 @@
 #include "iBuilder.h"
 #include "widgets/ui_types.h"
 
-#include <FL/Fl.H>
-#include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
-#include <FL/Fl_Group.H>
 
-#include <FL/Fl_Input.H>
 #include <optional>
 
 class TextBuilder : public IBuilder {
 public:
-  TextBuilder(const rect &groupRect);
+  TextBuilder(const rect &);
   Fl_Group *getGroup() override;
 
-  void setBG(const std::optional<background> &bg) override;
-  Fl_Box *setText(const char *label, const layout &settings);
+  void setBG(const std::optional<background> &) override;
+  Fl_Box *setText(const char *, const layout &);
 
 private:
   rect base;
@@ -27,11 +23,11 @@ private:
 
 class BtnBuilder : public IBuilder {
 public:
-  BtnBuilder(const rect &groupRect);
+  BtnBuilder(const rect &);
   Fl_Group *getGroup() override;
   Fl_Button *setBtn();
 
-  void setBG(const std::optional<background> &bg) override;
+  void setBG(const std::optional<background> &) override;
 
 private:
   rect base;
@@ -40,12 +36,12 @@ private:
 
 class InputBuilder : public IBuilder {
 public:
-  InputBuilder(const rect &groupRect);
+  InputBuilder(const rect &);
   Fl_Group *getGroup() override;
-  Fl_Input *setInput(const layout &settings);
-  Fl_Input *SetMultilineInput(const layout &settings);
+  Fl_Input *setInput(const layout &);
+  Fl_Input *SetMultilineInput(const layout &);
 
-  void setBG(const std::optional<background> &bg) override;
+  void setBG(const std::optional<background> &) override;
 
 private:
   rect base;
