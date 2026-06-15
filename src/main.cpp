@@ -1,9 +1,8 @@
-#include "data.h"
 #include "database.h"
 #include "director.h"
 #include "startup.h"
 
-#include "ui/input_mediator.h"
+#include "Entries_mediator.h"
 #include "widgets/custom_widgets.h"
 #include "widgets/styles.h"
 
@@ -13,13 +12,6 @@
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Tooltip.H>
 #include <FL/Fl_Window.H>
-
-void addEntry(DB *db) {
-  usrInput data{"apple", 0.6, 6,
-                "Its an apple asdfasdf as asdjfhasld kfha sldjf hasldk "};
-
-  db->insert(data);
-}
 
 void appSetting(Window *win) {
   Fl::focus(win);
@@ -45,14 +37,12 @@ int main(int argc, char **argv) {
   pack.spacing(16);
 
   DB db("DB test.db");
-  InputMediator med(&db);
+  EntriesMediator med(&db);
   Director dir = Director(&pack, &med);
 
-  // addEntry(&db);
   fetchFromDB(&db, &dir);
 
   dir.constructAddBtn();
-  // dir.constructInput();
 
   pack.end();
   sc.end();

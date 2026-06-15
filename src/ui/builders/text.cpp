@@ -1,13 +1,6 @@
 #include "builders.h"
 
-#include <FL/Enumerations.H>
-#include <FL/Fl.H>
-#include <FL/Fl_Box.H>
-#include <FL/Fl_Group.H>
-#include <FL/Fl_Widget.H>
 #include <FL/fl_draw.H>
-
-#include <optional>
 
 TextBuilder::TextBuilder(const rect &rect) {
   base = rect;
@@ -27,7 +20,7 @@ Fl_Box *TextBuilder::setText(const char *label, const layout &layout) {
 
   box->labelsize(layout.fontSize);
   box->tooltip(layout.tooltip);
-  box->box(FL_BORDER_FRAME); // testing
+  // box->box(FL_BORDER_FRAME); // testing
 
   // td enforce min width
 

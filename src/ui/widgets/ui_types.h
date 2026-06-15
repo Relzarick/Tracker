@@ -21,11 +21,11 @@ struct layout {
   rect pos;
 };
 
-struct entryWidgetData { // no ownership semantics
-  int id;
-  Fl_Input *name;
-  Fl_Input *price;
-  Fl_Input *qty;
-  Fl_Input *desc;
-  Fl_Group *group;
+struct widgetsData { // no ownership semantics??
+  int id = 0;
+  Fl_Input *name = nullptr;
+  Fl_Input *price = nullptr;
+  Fl_Input *qty = nullptr;
+  Fl_Input *desc = nullptr;
+  Fl_Group *group = nullptr;
 };

@@ -11,14 +11,14 @@ public:
   InputMediator(DB *db);
 
   void updateDBField(Fl_Input *field);
-  void setEntryToList(entryWidgetData entry);
+  void setEntryToList(widgetsData entry);
   int insertBlankEntry();
 
   DB *getDB();
 
 private:
   DB *db = nullptr;
-  std::vector<entryWidgetData> entryList;
+  std::vector<widgetsData> entryList;
 
   int retrieveEntryId(Fl_Input *pointer);
 };

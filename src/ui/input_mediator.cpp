@@ -11,7 +11,7 @@ InputMediator::InputMediator(DB *db) { this->db = db; }
 
 void InputMediator::updateDBField(Fl_Input *field) {
 
-  entryWidgetData entry = entryList[retrieveEntryId(field)];
+  widgetsData entry = entryList[retrieveEntryId(field)];
 
   usrInput input{entry.name->value(), std::stod(entry.price->value()),
                  std::stoi(entry.qty->value()), entry.desc->value()};
@@ -21,7 +21,7 @@ void InputMediator::updateDBField(Fl_Input *field) {
   getDB()->update(entry.id, input);
 }
 
-void InputMediator::setEntryToList(entryWidgetData entry) {
+void InputMediator::setEntryToList(widgetsData entry) {
   entryList.push_back(entry);
 }
 

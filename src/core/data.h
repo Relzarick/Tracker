@@ -3,10 +3,10 @@
 #include <string>
 
 struct usrInput {
-  const char *name;
-  double price;
-  int qty;
-  const char *description;
+  const char *name = "";
+  double price = 0;
+  int qty = 0;
+  const char *description = "";
 };
 
 struct dbOutput {

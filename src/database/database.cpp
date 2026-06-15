@@ -6,6 +6,8 @@
 #include <sqlite3.h>
 #include <vector>
 
+using std::println;
+
 DB::DB(const char *name) {
   char *err = nullptr;
 
@@ -20,7 +22,6 @@ DB::DB(const char *name) {
                "description TEXT)",
                nullptr, nullptr, &err);
 
-  //. add more fields after making this work
   // Create a db for each folder
 }
 
@@ -40,7 +41,7 @@ int DB::insert(const usrInput &input) {
   sqlite3_bind_text(stmt, 4, input.description, -1, SQLITE_TRANSIENT);
 
   if (sqlite3_step(stmt) != SQLITE_DONE)
-    std::println("SQL INSERT ERROR: {}", sqlite3_errmsg(db));
+    println("SQL INSERT ERROR: {}", sqlite3_errmsg(db));
 
   int rowId = sqlite3_last_insert_rowid(db);
 
@@ -66,7 +67,22 @@ void DB::update(int id, const usrInput &input) {
   sqlite3_bind_int(stmt, 5, id);
 
   if (sqlite3_step(stmt) != SQLITE_DONE)
-    std::println("SQL UPDATE ERROR: {}", sqlite3_errmsg(db));
+    println("SQL UPDATE ERROR: {}", sqlite3_errmsg(db));
+
+  int rowId = sqlite3_last_insert_rowid(db);
+
+  sqlite3_finalize(stmt);
+}
+
+void DB::remove(int id) {
+  assert(id > 0);
+  sqlite3_stmt *stmt;
+
+  sqlite3_prepare_v2(db, "DELETE FROM entry WHERE id = ?", -1, &stmt, nullptr);
+  sqlite3_bind_int(stmt, 1, id);
+
+  if (sqlite3_step(stmt) != SQLITE_DONE)
+    println("SQL DELETE ERROR: {}", sqlite3_errmsg(db));
 
   sqlite3_finalize(stmt);
 }
@@ -89,7 +105,7 @@ dbOutput DB::fetch(int id) {
     result.qty = sqlite3_column_int(stmt, 3);
     result.description = (const char *)sqlite3_column_text(stmt, 4);
   } else
-    std::println("SQL FETCH ERROR: {}", sqlite3_errmsg(db));
+    println("SQL FETCH ERROR: {}", sqlite3_errmsg(db));
 
   sqlite3_finalize(stmt);
   return result;

@@ -7,13 +7,14 @@
 
 class DB {
 public:
-  DB(const char *name);
+  DB(const char *);
   ~DB();
 
-  int insert(const usrInput &input);
-  void update(int id, const usrInput &input);
+  int insert(const usrInput &);
+  void update(int, const usrInput &);
+  void remove(int);
 
-  dbOutput fetch(int id);
+  dbOutput fetch(int);
   std::vector<dbOutput> fetchAll();
 
 private:
