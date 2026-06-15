@@ -13,8 +13,8 @@ BtnBuilder::BtnBuilder(const rect &rect) {
   group->end();
 }
 
-Fl_Button *BtnBuilder::setBtn() {
-  Fl_Button *btn = new Fl_Button(base.x, base.y, base.w, base.h);
+Fl_Button *BtnBuilder::setBtn(int height) {
+  Fl_Button *btn = new Fl_Button(base.x, base.y, base.w, height);
 
   btn->box(FL_ROUNDED_BOX);
   btn->down_box(FL_ROUNDED_BOX);

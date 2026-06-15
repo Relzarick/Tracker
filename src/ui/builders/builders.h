@@ -25,7 +25,7 @@ class BtnBuilder : public IBuilder {
 public:
   BtnBuilder(const rect &);
   Fl_Group *getGroup() override;
-  Fl_Button *setBtn();
+  Fl_Button *setBtn(int);
 
   void setBG(const std::optional<background> &) override;
 

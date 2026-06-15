@@ -93,10 +93,11 @@ void Director::constructEntry() {
 }
 
 void Director::constructAddBtn() {
-  BtnBuilder builder(rect{.w = divWidth, .h = 95});
+  BtnBuilder builder(rect{.w = divWidth, .h = 95 + 12});
   builder.getGroup()->begin();
 
-  Fl_Button *btn = builder.setBtn();
+  Fl_Button *btn = builder.setBtn(95);
+  new Fl_Box(0, 0, divWidth, 12);
 
   btn->callback(
       [](Fl_Widget *w, void *data) {
@@ -119,7 +120,7 @@ void Director::constructDeleteBtn(int widgetID) {
   BtnBuilder builder(rect);
   builder.getGroup()->begin();
 
-  Fl_Button *btn = builder.setBtn();
+  Fl_Button *btn = builder.setBtn(rect.h);
   Fl_PNG_Image *icon = new Fl_PNG_Image("assets/delete.png");
   deleteData *cbData = new deleteData{.med = med, .entryId = widgetID};
 
