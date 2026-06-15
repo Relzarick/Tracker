@@ -44,8 +44,6 @@ int main(int argc, char **argv) {
 
   dir.constructAddBtn();
 
-  // dir.constructInput();
-
   pack.end();
   sc.end();
   window.end();

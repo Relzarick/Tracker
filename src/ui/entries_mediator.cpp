@@ -1,27 +1,26 @@
 #include "Entries_mediator.h"
+#include "sanitize.h"
+
 #include "FL/Fl_Group.H"
 #include "data.h"
 #include "database.h"
 #include "ui_types.h"
 
-#include <print>
-
-using std::erase_if, std::println;
+using namespace sanitize;
+using std::erase_if;
 
 EntriesMediator::EntriesMediator(DB *db) { this->db = db; }
 
 void EntriesMediator::updateDBField(Fl_Input *field) {
   widgetsData *entry = retrieveEntry(field);
 
-  if (entry == nullptr) {
-    println("UpdateDB: Entry Not Found");
-    return;
-  }
+  const char *name = entry->name->value();
+  const char *desc = entry->desc->value();
 
-  usrInput input{entry->name->value(), std::stod(entry->price->value()),
-                 std::stoi(entry->qty->value()), entry->desc->value()};
+  int qty = cleanIntInput(entry->qty->value());
+  double price = cleandoubleInput(entry->price->value());
 
-  // td clean the value()
+  usrInput input{name, price, qty, desc};
 
   db->update(entry->id, input);
 }

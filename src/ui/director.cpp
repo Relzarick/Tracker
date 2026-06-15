@@ -122,7 +122,7 @@ void Director::constructDeleteBtn(int widgetID) {
 
   Fl_Button *btn = builder.setBtn(rect.h);
   Fl_PNG_Image *icon = new Fl_PNG_Image("assets/delete.png");
-  deleteData *cbData = new deleteData{.med = med, .entryId = widgetID};
+  deleteData *cbData = new deleteData{med, widgetID};
 
   btn->image(icon);
   btn->box(bg.box_type);
@@ -131,13 +131,13 @@ void Director::constructDeleteBtn(int widgetID) {
 
   btn->callback(
       [](Fl_Widget *w, void *data) {
-        auto dataStruct = static_cast<deleteData *>(data);
-        int id = dataStruct->entryId;
+        auto d = static_cast<deleteData *>(data);
+        int id = d->entryId;
 
-        Fl_Group *g = dataStruct->med->returnGroupPointer(id);
-        dataStruct->med->removeEntryFromList(id);
+        Fl_Group *group = d->med->returnGroupPointer(id);
+        d->med->removeEntryFromList(id);
 
-        Fl::delete_widget(g);
+        Fl::delete_widget(group);
         w->window()->redraw();
       },
       cbData);

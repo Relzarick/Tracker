@@ -74,6 +74,7 @@ add_executable(TrackerProject
     src/ui/builders/text.cpp
     src/ui/builders/input.cpp
     src/ui/builders/button.cpp
+    src/ui/widgets/custom_widgets.cpp
 )
 
 target_include_directories(TrackerProject PRIVATE
