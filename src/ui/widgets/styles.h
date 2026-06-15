@@ -5,6 +5,8 @@
 inline constexpr int divWidth = 660;
 inline constexpr int divHeight = 250;
 
+inline constexpr rect entryRect{.w = divWidth, .h = divHeight};
+
 // For entry styles
 inline constexpr int textHeight = 40;
 

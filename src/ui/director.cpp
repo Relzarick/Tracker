@@ -1,32 +1,30 @@
 #include "director.h"
+#include "Entries_mediator.h"
 #include "builders.h"
-#include "input_mediator.h"
 #include "styles.h"
 #include "ui_types.h"
-
-#include <format>
 
 #include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_Window.H>
 
-Director::Director(Fl_Pack *pack, InputMediator *med) {
+#include <format>
+
+Director::Director(Fl_Pack *pack, EntriesMediator *med) {
   this->pack = pack;
   this->med = med;
 }
 
 void Director::constructEntry(dbOutput data) {
-  rect rect{.w = divWidth, .h = divHeight};
-
-  TextBuilder textBuilder(rect);
+  TextBuilder textBuilder(entryRect);
   textBuilder.getGroup()->begin();
   textBuilder.setBG(background{});
 
-  InputBuilder inputBuilder(rect);
+  InputBuilder inputBuilder(entryRect);
 
   std::string priceStr = std::format("{:.2f}", data.price);
   std::string qtyStr = std::format("{}", data.qty);
 
-  entryWidgetData widget{};
+  widgetsData widget{};
 
   widget.id = data.id;
   textBuilder.setText("$ ", priceSymbol);
@@ -46,9 +44,8 @@ void Director::constructEntry(dbOutput data) {
 
   widget.group = textBuilder.getGroup();
 
-  constructDeleteBtn();
-
   med->setEntryToList(widget);
+  constructDeleteBtn(med->returnLastEntry());
 
   textBuilder.getGroup()->end();
   pack->add(textBuilder.getGroup());
@@ -57,18 +54,16 @@ void Director::constructEntry(dbOutput data) {
 };
 
 void Director::constructEntry() {
-  rect rect{.w = divWidth, .h = divHeight};
-
-  TextBuilder textBuilder(rect);
+  TextBuilder textBuilder(entryRect);
   textBuilder.getGroup()->begin();
   textBuilder.setBG(background{});
 
-  InputBuilder inputBuilder(rect);
+  InputBuilder inputBuilder(entryRect);
 
   std::string priceStr = std::format("{:.2f}", 0.0);
   std::string qtyStr = std::format("{}", 0);
 
-  entryWidgetData widget{};
+  widgetsData widget{};
 
   widget.id = med->insertBlankEntry();
   textBuilder.setText("$ ", priceSymbol);
@@ -88,9 +83,8 @@ void Director::constructEntry() {
 
   widget.group = textBuilder.getGroup();
 
-  constructDeleteBtn();
-
   med->setEntryToList(widget);
+  constructDeleteBtn(med->returnLastEntry());
 
   textBuilder.getGroup()->end();
   pack->add(textBuilder.getGroup());
@@ -118,7 +112,7 @@ void Director::constructAddBtn() {
   builder.getGroup()->end();
 }
 
-void Director::constructDeleteBtn() {
+void Director::constructDeleteBtn(int widgetID) {
   rect rect{.x = 600, .y = 15, .w = 30, .h = 40};
   background bg{.box_type = FL_NO_BOX};
 
@@ -127,6 +121,7 @@ void Director::constructDeleteBtn() {
 
   Fl_Button *btn = builder.setBtn();
   Fl_PNG_Image *icon = new Fl_PNG_Image("assets/delete.png");
+  deleteData *cbData = new deleteData{.med = med, .entryId = widgetID};
 
   btn->image(icon);
   btn->box(bg.box_type);
@@ -135,20 +130,23 @@ void Director::constructDeleteBtn() {
 
   btn->callback(
       [](Fl_Widget *w, void *data) {
-        auto *dir = static_cast<Director *>(data);
+        auto dataStruct = static_cast<deleteData *>(data);
+        int id = dataStruct->entryId;
 
-        //. make delete entry
+        Fl_Group *g = dataStruct->med->returnGroupPointer(id);
+        dataStruct->med->removeEntryFromList(id);
 
+        Fl::delete_widget(g);
         w->window()->redraw();
       },
-      this);
+      cbData);
 
   builder.getGroup()->end();
 }
 
-// td tbd what to do
+// td tbd on what to do
 void Director::constructInput() {
-  InputBuilder builder(rect{.w = divWidth, .h = divHeight});
+  InputBuilder builder(entryRect);
   builder.getGroup()->begin();
   builder.setBG(background{});
 
@@ -158,7 +156,7 @@ void Director::constructInput() {
   input->callback(
       [](Fl_Widget *w, void *data) {
         auto input = static_cast<Fl_Input *>(w);
-        auto med = static_cast<InputMediator *>(data);
+        auto med = static_cast<EntriesMediator *>(data);
 
         med->updateDBField(input);
       },
@@ -168,9 +166,9 @@ void Director::constructInput() {
   pack->add(builder.getGroup());
 }
 
-void Director::handleInputCB(entryWidgetData widget) {
+void Director::handleInputCB(widgetsData &widget) {
   auto handler = [](Fl_Widget *w, void *data) {
-    static_cast<InputMediator *>(data)->updateDBField(
+    static_cast<EntriesMediator *>(data)->updateDBField(
         static_cast<Fl_Input *>(w));
   };
 

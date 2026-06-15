@@ -1,23 +1,28 @@
 #pragma once
 
-#include "input_mediator.h"
+#include "Entries_mediator.h"
 
+#include <FL/Fl_Button.H>
 #include <FL/Fl_Pack.H>
-#include <Fl/Fl_Button.H>
 
 class Director {
 public:
-  Director(Fl_Pack *, InputMediator *);
+  Director(Fl_Pack *, EntriesMediator *);
 
   void constructEntry();
   void constructEntry(dbOutput);
   void constructInput();
   void constructAddBtn();
-  void constructDeleteBtn();
 
 private:
   Fl_Pack *pack = nullptr;
-  InputMediator *med = nullptr;
+  EntriesMediator *med = nullptr;
 
-  void handleInputCB(entryWidgetData);
+  void constructDeleteBtn(int);
+  void handleInputCB(widgetsData &);
+};
+
+struct deleteData {
+  EntriesMediator *med = nullptr;
+  int entryId;
 };

@@ -69,7 +69,7 @@ add_executable(TrackerProject
     src/main.cpp
     src/app/startup.cpp
     src/ui/director.cpp
-    src/ui/input_mediator.cpp
+    src/ui/entries_mediator.cpp
     src/database/database.cpp
     src/ui/builders/text.cpp
     src/ui/builders/input.cpp

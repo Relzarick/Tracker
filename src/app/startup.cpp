@@ -2,10 +2,6 @@
 #include "database.h"
 #include "director.h"
 
-#include <FL/Fl.H>
-#include <FL/Fl_Input.H>
-#include <FL/Fl_Multiline_Input.H>
-
 #include <vector>
 
 void fetchFromDB(DB *db, Director *dir) {

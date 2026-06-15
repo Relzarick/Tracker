@@ -20,7 +20,6 @@ DB::DB(const char *name) {
                "description TEXT)",
                nullptr, nullptr, &err);
 
-  //. add more fields after making this work
   // Create a db for each folder
 }
 
@@ -67,6 +66,19 @@ void DB::update(int id, const usrInput &input) {
 
   if (sqlite3_step(stmt) != SQLITE_DONE)
     std::println("SQL UPDATE ERROR: {}", sqlite3_errmsg(db));
+
+  sqlite3_finalize(stmt);
+}
+
+void DB::remove(int id) {
+  assert(id > 0);
+  sqlite3_stmt *stmt;
+
+  sqlite3_prepare_v2(db, "DELETE FROM entry WHERE id = ?", -1, &stmt, nullptr);
+  sqlite3_bind_int(stmt, 1, id);
+
+  if (sqlite3_step(stmt) != SQLITE_DONE)
+    std::println("SQL DELETE ERROR: {}", sqlite3_errmsg(db));
 
   sqlite3_finalize(stmt);
 }
