@@ -1,4 +1,5 @@
 #include "builders.h"
+#include "styles.h"
 
 #include <FL/fl_draw.H>
 
@@ -13,14 +14,14 @@ Fl_Box *TextBuilder::setText(const char *label, const layout &layout) {
   int tw = base.w, th = base.h;
   textPos = {layout.pos.x, layout.pos.y};
 
-  fl_font(FL_HELVETICA, layout.fontSize);
+  fl_font(FL_HELVETICA, textSize);
   fl_measure(label, tw, th);
+
   Fl_Box *box = new Fl_Box(textPos.x, textPos.y, tw, th);
   box->copy_label(label);
 
-  box->labelsize(layout.fontSize);
+  box->labelsize(textSize);
   box->tooltip(layout.tooltip);
-  // box->box(FL_BORDER_FRAME); // testing
 
   // td enforce min width
 

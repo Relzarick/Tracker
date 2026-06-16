@@ -1,8 +1,13 @@
 #include "director.h"
 #include "Entries_mediator.h"
+#include "FL/Enumerations.H"
+#include "FL/Fl_Box.H"
+#include "FL/Fl_Group.H"
+#include "FL/Fl_Pack.H"
 #include "builders.h"
 #include "styles.h"
 #include "ui_types.h"
+#include "url.h"
 
 #include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_Window.H>
@@ -99,6 +104,9 @@ void Director::constructAddBtn() {
   Fl_Button *btn = builder.setBtn(95);
   new Fl_Box(0, 0, divWidth, 12);
 
+  Fl_PNG_Image *icon = new Fl_PNG_Image("assets/plus.png");
+  btn->image(icon);
+
   btn->callback(
       [](Fl_Widget *w, void *data) {
         auto *dir = static_cast<Director *>(data);
@@ -113,21 +121,49 @@ void Director::constructAddBtn() {
   builder.getGroup()->end();
 }
 
-void Director::constructDeleteBtn(int widgetID) {
-  rect rect{.x = 600, .y = 15, .w = 30, .h = 40};
-  background bg{.box_type = FL_NO_BOX};
+void Director::constructSidePanel() {
+  background bg{};
 
-  BtnBuilder builder(rect);
+  Fl_Pack *pack = new Fl_Pack(0, 0, panelWidth, appHeight);
+  Fl_Group *group = new Fl_Group(0, 0, panelWidth, appHeight);
+
+  pack->spacing(8);
+  group->box(FL_FLAT_BOX);
+  group->color(bg.bg_color);
+
+  constructInfoBtn();
+
+  group->end();
+  pack->end();
+}
+
+void Director::constructInfoBtn() {
+  BtnBuilder builder(rect{.x = 5, .y = appHeight - 65, .w = panelWidth - 10});
+
+  Fl_Button *btn = builder.setBtn(60);
+  builder.setBG(background{.box_type = FL_NO_BOX});
+
+  Fl_PNG_Image *icon = new Fl_PNG_Image("assets/info.png");
+  btn->image(icon);
+  btn->tooltip("Click for my Github");
+
+  btn->callback([](Fl_Widget *w, void *data) {
+    openURL("https://github.com/Relzarick/Tracker");
+  });
+}
+
+void Director::constructDeleteBtn(int widgetID) {
+  BtnBuilder builder(deleteBtn.pos);
   builder.getGroup()->begin();
 
-  Fl_Button *btn = builder.setBtn(rect.h);
+  Fl_Button *btn = builder.setBtn(deleteBtn.pos.h);
+  builder.setBG(background{.box_type = FL_NO_BOX});
+
   Fl_PNG_Image *icon = new Fl_PNG_Image("assets/delete.png");
   deleteData *cbData = new deleteData{med, widgetID};
 
   btn->image(icon);
-  btn->box(bg.box_type);
-  btn->down_box(bg.box_type);
-  btn->down_color(bg.bg_color);
+  btn->tooltip(deleteBtn.tooltip);
 
   btn->callback(
       [](Fl_Widget *w, void *data) {
@@ -143,28 +179,6 @@ void Director::constructDeleteBtn(int widgetID) {
       cbData);
 
   builder.getGroup()->end();
-}
-
-// td tbd on what to do
-void Director::constructInput() {
-  InputBuilder builder(entryRect);
-  builder.getGroup()->begin();
-  builder.setBG(background{});
-
-  layout settings = {.pos = {200, 100, 200, 40}};
-  Fl_Input *input = builder.setInput(settings);
-
-  input->callback(
-      [](Fl_Widget *w, void *data) {
-        auto input = static_cast<Fl_Input *>(w);
-        auto med = static_cast<EntriesMediator *>(data);
-
-        med->updateDBField(input);
-      },
-      med);
-
-  builder.getGroup()->end();
-  pack->add(builder.getGroup());
 }
 
 void Director::handleInputCB(widgetsData &widget) {

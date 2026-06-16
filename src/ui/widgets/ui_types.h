@@ -17,7 +17,6 @@ struct rect {
 
 struct layout {
   const char *tooltip;
-  int fontSize = 22;
   rect pos;
 };
 

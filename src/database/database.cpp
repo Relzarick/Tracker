@@ -69,8 +69,6 @@ void DB::update(int id, const usrInput &input) {
   if (sqlite3_step(stmt) != SQLITE_DONE)
     println("SQL UPDATE ERROR: {}", sqlite3_errmsg(db));
 
-  int rowId = sqlite3_last_insert_rowid(db);
-
   sqlite3_finalize(stmt);
 }
 
