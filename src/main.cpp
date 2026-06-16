@@ -19,7 +19,7 @@ void appSetting(Window *win) {
 
 int main(int argc, char **argv) {
   Fl_PNG_Image icon("assets/pfp.png");
-  Window window(appWidth, appHeight, "Tracker");
+  Window window(appWidth, appHeight, "Simple Inventory");
   Fl_Scroll sc(panelWidth, 0, appWidth - panelWidth, appHeight);
 
   appSetting(&window);
