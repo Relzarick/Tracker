@@ -1,6 +1,7 @@
 #include "builders.h"
 
 #include "custom_widgets.h"
+#include "styles.h"
 #include "ui_types.h"
 
 InputBuilder::InputBuilder(const rect &rect) {
@@ -14,7 +15,7 @@ Fl_Input *InputBuilder::setInput(const layout &layout) {
   auto input =
       new InputField(layout.pos.x, layout.pos.y, layout.pos.w, layout.pos.h);
 
-  input->textsize(layout.fontSize);
+  input->textsize(textSize);
   input->tooltip(layout.tooltip);
 
   return input;
@@ -24,7 +25,7 @@ Fl_Input *InputBuilder::SetMultilineInput(const layout &layout) {
   auto multiInput =
       new BigInputField(layout.pos.x, layout.pos.y, layout.pos.w, layout.pos.h);
 
-  multiInput->textsize(layout.fontSize);
+  multiInput->textsize(textSize);
   multiInput->tooltip(layout.tooltip);
 
   return multiInput;

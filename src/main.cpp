@@ -6,12 +6,9 @@
 #include "widgets/custom_widgets.h"
 #include "widgets/styles.h"
 
-#include <FL/Enumerations.H>
-#include <FL/Fl.H>
-#include <FL/Fl_Pack.H>
+#include "FL/Fl_PNG_Image.H"
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Tooltip.H>
-#include <FL/Fl_Window.H>
 
 void appSetting(Window *win) {
   Fl::focus(win);
@@ -21,31 +18,31 @@ void appSetting(Window *win) {
 }
 
 int main(int argc, char **argv) {
-  int width = 700;
-  int height = 750;
-  int x = 15;
-
-  Window window(width, height, "Tracker");
-  Fl_Scroll sc(0, 0, width, height);
+  Fl_PNG_Image icon("assets/pfp.png");
+  Window window(appWidth, appHeight, "Tracker");
+  Fl_Scroll sc(panelWidth, 0, appWidth - panelWidth, appHeight);
 
   appSetting(&window);
 
   sc.type(Fl_Scroll::VERTICAL);
   sc.scrollbar.color(sc.color());
 
-  Fl_Pack pack(x, 0, divWidth, height);
+  Fl_Pack pack(panelWidth + 12, 0, divWidth, appHeight);
   pack.spacing(16);
 
   DB db("DB test.db");
   EntriesMediator med(&db);
-  Director dir = Director(&pack, &med);
+  Director dir(&pack, &med);
 
   fetchFromDB(&db, &dir);
-
   dir.constructAddBtn();
+
+  window.icon(&icon);
 
   pack.end();
   sc.end();
+
+  dir.constructSidePanel();
   window.end();
   window.show(argc, argv);
 

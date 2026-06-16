@@ -31,6 +31,7 @@ public:
 
 private:
   rect base;
+  Fl_Button *btn = nullptr;
   Fl_Group *group = nullptr;
 };
 

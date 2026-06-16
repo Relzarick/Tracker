@@ -14,7 +14,7 @@ BtnBuilder::BtnBuilder(const rect &rect) {
 }
 
 Fl_Button *BtnBuilder::setBtn(int height) {
-  Fl_Button *btn = new Fl_Button(base.x, base.y, base.w, height);
+  btn = new Fl_Button(base.x, base.y, base.w, height);
 
   btn->box(FL_ROUNDED_BOX);
   btn->down_box(FL_ROUNDED_BOX);
@@ -26,8 +26,9 @@ Fl_Button *BtnBuilder::setBtn(int height) {
 }
 
 void BtnBuilder::setBG(const std::optional<background> &bg) {
-  group->color(bg->bg_color);
-  group->box(bg->box_type);
+  btn->box(bg->box_type);
+  btn->down_box(bg->box_type);
+  btn->down_color(bg->bg_color);
 };
 
 Fl_Group *BtnBuilder::getGroup() { return group; }
