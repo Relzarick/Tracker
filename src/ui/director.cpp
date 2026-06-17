@@ -145,7 +145,7 @@ void Director::constructInfoBtn() {
 
   Fl_PNG_Image *icon = new Fl_PNG_Image("assets/info.png");
   btn->image(icon);
-  btn->tooltip("Click for my Github");
+  btn->tooltip("Links to my Github");
 
   btn->callback([](Fl_Widget *w, void *data) {
     openURL("https://github.com/Relzarick/Tracker");

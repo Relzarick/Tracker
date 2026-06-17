@@ -59,7 +59,6 @@ widgetsData *EntriesMediator::retrieveEntry(Fl_Input *p) {
       return &entryList[i];
   }
 
-  // td if there is time, find a faster way to search
   return nullptr;
 }
 

@@ -35,12 +35,6 @@ target_compile_definitions(sqlite3 PRIVATE
     SQLITE_DEFAULT_MEMSTATUS=0
 )
 
-target_compile_definitions(sqlite3 PRIVATE
-    SQLITE_THREADSAFE=1
-    SQLITE_DQS=0
-    SQLITE_DEFAULT_MEMSTATUS=0
-)
-
 if(UNIX)
     target_link_libraries(sqlite3 PUBLIC dl pthread)
 endif()
@@ -73,3 +67,9 @@ if(WIN32)
 endif()
 
 target_link_libraries(TrackerProject PRIVATE fltk fltk_images sqlite3)
+
+add_custom_command(TARGET TrackerProject POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/assets
+        $<TARGET_FILE_DIR:TrackerProject>/assets
+)

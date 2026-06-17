@@ -20,7 +20,7 @@ struct layout {
   rect pos;
 };
 
-struct widgetsData { // no ownership semantics??
+struct widgetsData {
   int id = 0;
   Fl_Input *name = nullptr;
   Fl_Input *price = nullptr;

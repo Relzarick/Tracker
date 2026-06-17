@@ -24,8 +24,6 @@ int main(int argc, char **argv) {
 
   appSetting(&window);
 
-  appSetting(&window);
-
   sc.type(Fl_Scroll::VERTICAL);
   sc.scrollbar.color(sc.color());
 

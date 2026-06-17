@@ -25,9 +25,8 @@ You can add, track, and delete entries. The info button links to the repo.
 * **Backend (Mediator Pattern):** Separates entry state and DB interaction into a single class, keeping the Director clean and focused only on composition.
 
 ## SETUP & RUN
-Clone repo and compile.
+Clone repo and compile. Should compile on windows and linux.
 
 
 ## TODO
-1. Switch to a repository pattern.
-2. Add multi-folder support.
+1. Add multi-folder support.

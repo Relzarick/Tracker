@@ -21,8 +21,6 @@ DB::DB(const char *name) {
                "qty INTEGER,"
                "description TEXT)",
                nullptr, nullptr, &err);
-
-  // Create a db for each folder
 }
 
 DB::~DB() { sqlite3_close(db); }
